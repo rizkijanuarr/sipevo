@@ -1,12 +1,11 @@
 /*
-We believe, the class name must be unique.
+We believe, the class name must be unique. 
 If there is a conflicting class name in this file,
 it means you have to rename it to something more unique.
 */
 export 'package:sipevo/app_routes.dart';
 export 'package:sipevo/module/admin/beranda/controller/beranda_controller.dart';
 export 'package:sipevo/module/admin/beranda/view/beranda_view.dart';
-export 'package:sipevo/module/admin/beranda/widget/bar_chart.dart';
 export 'package:sipevo/module/admin/beranda/widget/dotted_border.dart';
 export 'package:sipevo/module/admin/beranda/widget/menu.dart';
 export 'package:sipevo/module/admin/complaints/controller/complaints_controller.dart';
@@ -31,6 +30,18 @@ export 'package:sipevo/module/login/view/login_view.dart';
 export 'package:sipevo/module/models/complaints.dart';
 export 'package:sipevo/module/models/logs.dart';
 export 'package:sipevo/module/models/user.dart';
+export 'package:sipevo/module/operator/akun/controller/akun_controller.dart';
+export 'package:sipevo/module/operator/akun/view/akun_view.dart';
+export 'package:sipevo/module/operator/home/controller/home_controller.dart';
+export 'package:sipevo/module/operator/home/view/home_view.dart';
+export 'package:sipevo/module/operator/home/widget/border_dotted.dart';
+export 'package:sipevo/module/operator/home/widget/menus.dart';
+export 'package:sipevo/module/operator/komplain/controller/komplain_controller.dart';
+export 'package:sipevo/module/operator/komplain/update_komplain/controller/update_komplain_controller.dart';
+export 'package:sipevo/module/operator/komplain/update_komplain/view/update_komplain_view.dart';
+export 'package:sipevo/module/operator/komplain/view/komplain_view.dart';
+export 'package:sipevo/module/operator/navbarop/controller/navbarop_controller.dart';
+export 'package:sipevo/module/operator/navbarop/view/navbarop_view.dart';
 export 'package:sipevo/module/register/controller/register_controller.dart';
 export 'package:sipevo/module/register/view/register_view.dart';
 export 'package:sipevo/shared_prefs_helper.dart';

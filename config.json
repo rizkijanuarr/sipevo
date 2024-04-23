@@ -1,20 +1,10 @@
 {
     "modules": [
-        "login",
-        "register",
-        "main/nav/admin",
-        "admin/beranda",
-        "admin/user",
-        "admin/user/tambah_user",
-        "admin/user/update_user",
-        "admin/logs",
-        "admin/complaints",
-        "admin/complaints/update_complaints",
-        "admin/profile",
-        "operator/beranda",
-        "operator/complaints",
-        "operator/profile",
-        "operator/nav_operator"
+        "operator/navbarop",
+        "operator/home",
+        "operator/komplain",
+        "operator/komplain/update_komplain",
+        "operator/akun"
     ],
     "module_directory_name": "module",
     "experimental_mode": false,

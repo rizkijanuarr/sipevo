@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import '../controller/profile_controller.dart' as beranda; // Alias added here
+import '../controller/akun_controller.dart';
 import 'package:sipevo/core.dart';
 import 'package:get/get.dart';
 
-class ProfileView extends StatelessWidget {
-  const ProfileView({super.key});
+class AkunView extends StatelessWidget {
+  const AkunView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<beranda.ProfileController>(
-      // Use the alias here
-      init: beranda.ProfileController(), // And here
+    return GetBuilder<AkunController>(
+      init: AkunController(),
       builder: (controller) {
         controller.view = this;
+
         return Scaffold(
           appBar: AppBar(
             title: const Text("Profile"),
