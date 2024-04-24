@@ -14,7 +14,10 @@ void main() async {
         startingWidget = const NavAdmin(); // Navigasi ke Beranda Admin
         break;
       case 'operator':
-        startingWidget = const NavbaropView(); // Navigasi ke Beranda Admin
+        startingWidget = const NavbaropView(); // Navigasi ke Beranda Operator
+        break;
+      case 'mahasiswa':
+        startingWidget = const NavbarmhsView(); // Navigasi ke Beranda Mahasiswa
         break;
       // Tambahkan case untuk role lainnya
     }
@@ -43,12 +46,6 @@ class MyApp extends StatelessWidget {
         ),
       ),
       home: startingWidget, // Gunakan startingWidget sebagai halaman awal
-      // getPages: [
-      //   GetPage(
-      //       name: '/login',
-      //       page: () => const LoginView()), // Definisikan rute untuk LoginView
-      //   // Tambahkan definisi rute lainnya di sini
-      // ],
     );
   }
 }

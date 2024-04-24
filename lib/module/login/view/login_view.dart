@@ -116,7 +116,6 @@ class LoginView extends StatelessWidget {
                                         tag: "login_btn",
                                         child: ElevatedButton(
                                           onPressed: () async {
-                                            // Panggil fungsi login di sini
                                             await controller.login();
                                           },
                                           child: Text(
@@ -141,7 +140,14 @@ class LoginView extends StatelessWidget {
                                           ),
                                           GestureDetector(
                                             onTap: () {
-                                              Get.to(const RegisterView());
+                                              try {
+                                                print(
+                                                    "Navigating to RegisterView");
+                                                Get.to(RegisterView());
+                                              } catch (e) {
+                                                print(
+                                                    "Error navigating to RegisterView: $e");
+                                              }
                                             },
                                             child: const Text(
                                               "Sign Up",

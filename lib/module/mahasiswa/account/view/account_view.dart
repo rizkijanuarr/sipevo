@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
+import '../controller/account_controller.dart';
 import 'package:sipevo/core.dart';
 import 'package:get/get.dart';
 
-class ProfileView extends StatelessWidget {
-  const ProfileView({super.key});
+class AccountView extends StatelessWidget {
+  const AccountView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<ProfileController>(
-      init: ProfileController(),
+    return GetBuilder<AccountController>(
+      init: AccountController(),
       builder: (controller) {
         controller.view = this;
 

@@ -1,21 +1,22 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:sipevo/module/mahasiswa/dashboard/widget/meynu.dart';
+import 'package:url_launcher/url_launcher.dart';
+import '../controller/dashboard_controller.dart';
 import 'package:sipevo/core.dart';
 import 'package:get/get.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:intl/intl.dart';
-import 'package:url_launcher/url_launcher.dart';
 
-class BerandaView extends StatelessWidget {
-  const BerandaView({super.key});
+class DashboardView extends StatelessWidget {
+  const DashboardView({super.key});
 
   // URL tujuan
   final String _url = 'https://vokasi.unesa.ac.id/';
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<BerandaController>(
-      init: BerandaController(),
+    return GetBuilder<DashboardController>(
+      init: DashboardController(),
       builder: (controller) {
         controller.view = this;
 
@@ -91,7 +92,7 @@ class BerandaView extends StatelessWidget {
                               20, // Atau nilai lain untuk menyesuaikan posisi lebih ke atas
                           left: 0,
                           right: 0,
-                          child: ExpandableContainer(),
+                          child: Meynu(),
                         ),
                       ],
                     ),
@@ -214,66 +215,13 @@ class BerandaView extends StatelessWidget {
                       ],
                     );
                   }),
-                  Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Theme.of(context)
-                            .cardColor, // Ensure this matches your existing color
-                        borderRadius:
-                            BorderRadius.circular(20), // Added border radius
-                      ),
-                      child: Builder(
-                        builder: (context) {
-                          final List<Map> chartData = [
-                            {
-                              "year": "Pending",
-                              "sales": 40,
-                            },
-                            {
-                              "year": "Open",
-                              "sales": 90,
-                            },
-                            {
-                              "year": "Closed",
-                              "sales": 30,
-                            },
-                          ];
-
-                          return Padding(
-                            padding: const EdgeInsets.all(20.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Total Pengaduan", // Title text
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleLarge, // Adjust the style as needed
-                                ),
-                                SfCircularChart(
-                                  legend: const Legend(isVisible: true),
-                                  series: <CircularSeries>[
-                                    PieSeries<Map, String>(
-                                      dataSource: chartData,
-                                      dataLabelSettings:
-                                          const DataLabelSettings(
-                                        isVisible: true,
-                                      ),
-                                      xValueMapper: (Map data, _) =>
-                                          data["year"],
-                                      yValueMapper: (Map data, _) =>
-                                          data["sales"],
-                                    )
-                                  ],
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  ),
+                  // const Text(
+                  //   "test",
+                  //   style: TextStyle(
+                  //     fontSize: 20.0,
+                  //     fontWeight: FontWeight.bold,
+                  //   ),
+                  // ),
                 ],
               ),
             ),

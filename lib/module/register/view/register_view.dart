@@ -175,14 +175,10 @@ class RegisterView extends StatelessWidget {
                                         tag: "login_btn",
                                         child: ElevatedButton(
                                           onPressed: () {
-                                            // if (_formKey.currentState!
-                                            //     .validate()) {
-                                            //   EventDB.login(
-                                            //       _controllerNohp.text,
-                                            //       _controllerPassword.text);
-                                            //   _controllerNohp.clear();
-                                            //   _controllerPassword.clear();
-                                            // }
+                                            if (controller.formKey.currentState!
+                                                .validate()) {
+                                              controller.registerUser();
+                                            }
                                           },
                                           child: Text(
                                             style: const TextStyle(
@@ -206,7 +202,14 @@ class RegisterView extends StatelessWidget {
                                           ),
                                           GestureDetector(
                                             onTap: () {
-                                              Get.to(const LoginView());
+                                              try {
+                                                print(
+                                                    "Navigating to LoginView");
+                                                Get.back(canPop: true);
+                                              } catch (e) {
+                                                print(
+                                                    "Error navigating to LoginView: $e");
+                                              }
                                             },
                                             child: const Text(
                                               "Login",

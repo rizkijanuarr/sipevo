@@ -19,10 +19,8 @@ class AkunView extends StatelessWidget {
             actions: [
               IconButton(
                 onPressed: () async {
-                  await SharedPrefsHelper
-                      .removeToken(); // Memanggil metode untuk menghapus token
-                  Get.offAllNamed(
-                      '/login'); // Mengarahkan pengguna ke halaman login atau halaman awal
+                  await SharedPrefsHelper.removeToken();
+                  Get.offAll(LoginView());
                 },
                 icon: const Icon(
                   Icons.logout,

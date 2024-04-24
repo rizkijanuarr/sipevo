@@ -4,7 +4,13 @@
         "operator/home",
         "operator/komplain",
         "operator/komplain/update_komplain",
-        "operator/akun"
+        "operator/akun",
+        "mahasiswa/navbarmhs",
+        "mahasiswa/dashboard",
+        "mahasiswa/komplen",
+        "mahasiswa/komplen/tambah_komplen",
+        "mahasiswa/komplen/history_komplen",
+        "mahasiswa/account"
     ],
     "module_directory_name": "module",
     "experimental_mode": false,

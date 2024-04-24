@@ -1,5 +1,5 @@
 /*
-We believe, the class name must be unique. 
+We believe, the class name must be unique.
 If there is a conflicting class name in this file,
 it means you have to rename it to something more unique.
 */
@@ -27,6 +27,17 @@ export 'package:sipevo/module/admin/user/update_user/view/update_user_view.dart'
 export 'package:sipevo/module/admin/user/view/user_view.dart';
 export 'package:sipevo/module/login/controller/login_controller.dart';
 export 'package:sipevo/module/login/view/login_view.dart';
+export 'package:sipevo/module/mahasiswa/account/controller/account_controller.dart';
+export 'package:sipevo/module/mahasiswa/account/view/account_view.dart';
+export 'package:sipevo/module/mahasiswa/dashboard/controller/dashboard_controller.dart';
+export 'package:sipevo/module/mahasiswa/dashboard/view/dashboard_view.dart';
+export 'package:sipevo/module/mahasiswa/komplen/controller/komplen_controller.dart';
+
+export 'package:sipevo/module/mahasiswa/komplen/tambah_komplen/controller/tambah_komplen_controller.dart';
+export 'package:sipevo/module/mahasiswa/komplen/tambah_komplen/view/tambah_komplen_view.dart';
+export 'package:sipevo/module/mahasiswa/komplen/view/komplen_view.dart';
+export 'package:sipevo/module/mahasiswa/navbarmhs/controller/navbarmhs_controller.dart';
+export 'package:sipevo/module/mahasiswa/navbarmhs/view/navbarmhs_view.dart';
 export 'package:sipevo/module/models/complaints.dart';
 export 'package:sipevo/module/models/logs.dart';
 export 'package:sipevo/module/models/user.dart';

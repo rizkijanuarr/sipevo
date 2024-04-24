@@ -1,8 +1,14 @@
 class AppRoutes {
-  static const baseURL = 'http://192.168.1.79/sipevo';
+  static const baseURL = 'http://192.168.1.14/sipevo';
+  static String register = '$baseURL/register.php';
 
   static const complaints = '$baseURL/complaints';
   static String complaintsList = '$complaints/get_complaints.php';
+  static String complaintsListMahasiswa =
+      '$complaints/get_complaints_mahasiswa.php';
+  static String addComplaintsMahasiswa =
+      '$complaints/add_complaints_mahasiswa.php';
+
   static String updateStatusComplaints = '$complaints/update_status.php';
   static String deleteComplaints = '$complaints/delete_complaints.php';
 
