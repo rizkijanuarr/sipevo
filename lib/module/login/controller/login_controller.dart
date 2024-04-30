@@ -1,4 +1,4 @@
-import 'dart:convert'; // Import ini diperlukan untuk jsonEncode
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,42 +11,41 @@ import '../view/login_view.dart';
 class LoginController extends GetxController {
   LoginView? view;
 
-  // ICON PASSWORD
-  // Property to track if password is visible
+  // KEBUTUHAN visible password
   bool showPassword = false;
 
-  // Method to toggle the visibility of the password
   void togglePasswordVisibility() {
     showPassword = !showPassword;
-    update(); // Notify listeners about the change
+    update();
   }
-  // END ICON PASSWORD
-
-  var controllerNohp = TextEditingController();
-  var controllerPassword = TextEditingController();
-  var formKey = GlobalKey<FormState>();
+  // KEBUTUHAN visible password
 
   void navigateBasedOnRole(String role) {
     switch (role) {
       case 'admin':
-        Get.offAll(() => NavAdmin()); // Navigasi ke Beranda Admin
+        Get.offAll(() => NavAdmin()); // Beranda Admin
         break;
       case 'operator':
-        Get.offAll(() => NavbaropView()); // Navigasi ke Beranda Admin
+        Get.offAll(() => NavbaropView()); // Beranda OP
         break;
       case 'mahasiswa':
-        Get.offAll(() => NavbarmhsView()); // Navigasi ke Beranda Admin
+        Get.offAll(() => NavbarmhsView()); // Beranda Mahasiswa
         break;
       default:
         Get.offAll(
-            () => LoginView()); // Kembali ke LoginView jika role tidak dikenali
+            () => LoginView()); // Back to LoginView jika role tidak dikenali
     }
   }
 
+  // KEBUTUHAN LOGIN USER
+  var formKey = GlobalKey<FormState>();
+  var controllerNohp = TextEditingController();
+  var controllerPassword = TextEditingController();
+
   Future<void> login() async {
     if (formKey.currentState!.validate()) {
-      print("Phone: ${controllerNohp.text}"); // Menampilkan nomor telepon
-      print("Password: ${controllerPassword.text}"); // Menampilkan password
+      print("Phone: ${controllerNohp.text}");
+      print("Password: ${controllerPassword.text}");
       print('URL: ${AppRoutes.login}');
       print('Headers: ${{'Content-Type': 'application/json'}}');
       print('Body: ${jsonEncode({
@@ -54,7 +53,6 @@ class LoginController extends GetxController {
             'password': controllerPassword.text
           })}');
       try {
-        // Form valid, kirim request ke backend dengan header untuk JSON
         final response = await http.post(
           Uri.parse(AppRoutes.login),
           headers: {'Content-Type': 'application/json'},
@@ -70,32 +68,29 @@ class LoginController extends GetxController {
         final responseData = jsonDecode(response.body);
 
         if (response.statusCode == 200) {
-          // Login berhasil, simpan token dan role
           String token = responseData['token'];
-          String role = responseData['role']; // Asumsi role dikirim dari server
+          String role = responseData['role'];
 
           await SharedPrefsHelper.setToken(token);
-          await SharedPrefsHelper.setUserRole(role); // Simpan role pengguna
+          await SharedPrefsHelper.setUserRole(role);
 
           print("Token: $token");
           print("Role: $role");
 
-          // Navigasi berdasarkan role
-          navigateBasedOnRole(role);
+          navigateBasedOnRole(role); // Navigasi
         } else {
-          // Login gagal, tampilkan pesan kesalahan dari server
           String errorMessage =
               responseData['message'] ?? 'Login failed, please try again.';
           Get.snackbar('Error', errorMessage);
         }
       } catch (e) {
-        // Menangkap error dan menampilkan snackbar
         Get.snackbar('Error', 'An error occurred: $e');
       } finally {
-        // Clear text fields setelah login
         controllerNohp.clear();
         controllerPassword.clear();
       }
     }
   }
+
+  // LAST
 }

@@ -101,8 +101,7 @@ class LoginView extends StatelessWidget {
                                           controller:
                                               controller.controllerPassword,
                                           textInputAction: TextInputAction.done,
-                                          obscureText: !controller
-                                              .showPassword, // Toggle based on controller state
+                                          obscureText: !controller.showPassword,
                                           cursorColor: AppColors.primarySwatch,
                                           decoration: InputDecoration(
                                             hintText: "Your password",
@@ -112,14 +111,12 @@ class LoginView extends StatelessWidget {
                                             ),
                                             suffixIcon: IconButton(
                                               icon: Icon(
-                                                // Toggle the icon dynamically
                                                 controller.showPassword
                                                     ? Icons.visibility
                                                     : Icons.visibility_off,
                                                 color: AppColors.primarySwatch,
                                               ),
                                               onPressed: () {
-                                                // Update the state to show or hide the password
                                                 controller
                                                     .togglePasswordVisibility();
                                               },
@@ -129,7 +126,7 @@ class LoginView extends StatelessWidget {
                                       ),
                                       const SizedBox(height: 16.0),
                                       Hero(
-                                        tag: "login_btn",
+                                        tag: "login_button",
                                         child: ElevatedButton(
                                           onPressed: () async {
                                             await controller.login();

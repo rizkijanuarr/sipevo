@@ -10,16 +10,16 @@ import 'package:http/http.dart' as http;
 class RegisterController extends GetxController {
   RegisterView? view;
 
-  // IKON PASSWORD
+  // KEBUTUHAN visible password
   bool showPassword = false;
 
   void togglePasswordVisibility() {
     showPassword = !showPassword;
-    update(); // This triggers a UI update if you are using GetX
+    update();
   }
-  // END IKON
+  // KEBUTUHAN visible password
 
-  // DROPDOWN
+  // KEBUTUHAN DROPDOWN mahasiswa_angkatan dan prodi
   String? selectedAngkatan;
   String? selectedProdi;
 
@@ -48,22 +48,22 @@ class RegisterController extends GetxController {
 
   void updateSelectedAngkatan(String? newAngkatan) {
     selectedAngkatan = newAngkatan;
-    update(); // This triggers a UI update
+    update();
   }
 
   void updateSelectedProdi(String? newProdi) {
     selectedProdi = newProdi;
-    update(); // This triggers a UI update
+    update();
   }
-  // END DROPDOWN
+  // KEBUTUHAN DROPDOWN mahasiswa_angkatan dan prodi
 
+  // KEBUTUHAN REGISTER USER
+  var formKey = GlobalKey<FormState>();
   var controllerName = TextEditingController();
   var controllerNohp = TextEditingController();
   var controllerPass = TextEditingController();
   var controllerMahasiswaAngkatan = ();
   var controllerProdi = ();
-
-  var formKey = GlobalKey<FormState>();
 
   Future<void> registerUser() async {
     var url = Uri.parse(AppRoutes.register);
@@ -79,8 +79,7 @@ class RegisterController extends GetxController {
 
     if (response.statusCode == 200) {
       var data = json.decode(response.body);
-      print(
-          "Response from server: ${response.body}"); // Print the raw response from the server
+      print("Response from server: ${response.body}");
 
       if (data['success']) {
         Get.snackbar(
@@ -124,4 +123,6 @@ class RegisterController extends GetxController {
     selectedAngkatan = null;
     selectedProdi = null;
   }
+
+  // LAST
 }
