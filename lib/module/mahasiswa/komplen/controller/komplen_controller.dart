@@ -1,7 +1,9 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:sipevo/app_routes.dart';
 import 'package:sipevo/core.dart';
 import 'package:sipevo/module/models/complaints.dart';
@@ -12,30 +14,39 @@ import 'package:http/http.dart' as http;
 class KomplenController extends GetxController {
   KomplenView? view;
 
-  var complaints = <Complaints>[].obs; // Gunakan tipe data Complaint
-  String basePhotoComplaints =
-      "https://sipevo.my.id/public/uploads/complaints/";
-
-  void refreshComplaints() async {
-    fetchComplaints();
-    update();
-
-    // Menampilkan Snackbar
-    Get.snackbar(
-      'Refreshed', // Judul Snackbar
-      'Data telah diperbarui🚀', // Pesan Snackbar
-      snackPosition: SnackPosition.BOTTOM, // Posisi Snackbar
-      backgroundColor: Colors.blue, // Warna latar belakang Snackbar
-      colorText: Colors.white, // Warna teks Snackbar
-      duration: const Duration(seconds: 5), // Durasi tampilan Snackbar
-    );
-  }
-
   @override
   void onInit() {
     fetchComplaints();
     super.onInit();
   }
+
+  @override
+  void onClose() {
+    subjectController.dispose();
+    descriptionController.dispose();
+    photoController.dispose();
+    super.onClose();
+  }
+
+  // REFRESH KONTEN
+  void refreshComplaints() async {
+    fetchComplaints();
+    update();
+
+    Get.snackbar(
+      'Refreshed',
+      'Data telah diperbarui🚀',
+      snackPosition: SnackPosition.BOTTOM,
+      backgroundColor: Colors.blue,
+      colorText: Colors.white,
+      duration: const Duration(seconds: 5),
+    );
+  }
+
+  // LIST KOMPLEN => HALAMAN KOMPLEN VIEW
+  var complaints = <Complaints>[].obs;
+  String basePhotoComplaints =
+      "https://sipevo.my.id/public/uploads/complaints/";
 
   void fetchComplaints() async {
     String? token = await SharedPrefsHelper.getToken();
@@ -70,4 +81,111 @@ class KomplenController extends GetxController {
       print('Failed to load complaints');
     }
   }
+
+  // TAMBAH KOMPLEN => HALAMAN TAMBAH KOMPLEN
+  String? selectedLocation;
+  XFile? selectedImage;
+
+  final formKey = GlobalKey<FormState>();
+  final TextEditingController subjectController = TextEditingController();
+  final TextEditingController descriptionController = TextEditingController();
+  final controllerLocation = ();
+  final TextEditingController photoController = TextEditingController();
+
+  final List<String> locationItems = [
+    'K1',
+    'K2',
+    'K3',
+    'K4',
+    'K5',
+    'K6',
+    'K7',
+    'K8',
+    'K9',
+    'K10'
+  ];
+
+  void updateSelectedLocation(String? newLocation) {
+    selectedLocation = newLocation;
+    update();
+  }
+
+  void addComplaint() async {
+    try {
+      final token = await SharedPrefsHelper.getToken();
+      print('Token: $token');
+
+      if (subjectController.text.isEmpty ||
+          descriptionController.text.isEmpty) {
+        Get.snackbar(
+          'Error',
+          'Subject and description cannot be empty',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.blue,
+          colorText: Colors.white,
+          duration: const Duration(seconds: 5),
+        );
+        return;
+      }
+
+      var request = http.MultipartRequest(
+          'POST', Uri.parse(AppRoutes.addComplaintsMahasiswa));
+      request.headers['Authorization'] = 'Bearer $token';
+      request.fields['subject'] = subjectController.text;
+      request.fields['description'] = descriptionController.text;
+      request.fields['location'] = selectedLocation!;
+
+      if (selectedImage != null) {
+        var imageFile = File(selectedImage!.path);
+        var photo = await http.MultipartFile.fromPath('photo', imageFile.path);
+        request.files.add(photo);
+      }
+
+      var response = await request.send();
+      print('Response status: ${response.statusCode}');
+
+      if (response.statusCode == 201) {
+        var responseBody = await response.stream.bytesToString();
+        print('Response body: $responseBody');
+
+        var responseJson = json.decode(responseBody);
+        var photoUrl = responseJson['photo_url'];
+
+        Get.snackbar(
+          'Success',
+          'Complaint added successfully. Photo URL: $photoUrl',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.blue,
+          colorText: Colors.white,
+          duration: const Duration(seconds: 5),
+        );
+      } else {
+        final responseData = json.decode(await response.stream.bytesToString());
+        Get.snackbar(
+          'Error',
+          responseData['message'],
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.blue,
+          colorText: Colors.white,
+          duration: const Duration(seconds: 5),
+        );
+      }
+    } catch (e) {
+      print('An error occurred: $e');
+      Get.snackbar(
+        'Error',
+        'An unexpected error occurred',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+        duration: const Duration(seconds: 5),
+      );
+    } finally {
+      subjectController.clear();
+      descriptionController.clear();
+      photoController.clear();
+    }
+  }
+
+  // LAST
 }

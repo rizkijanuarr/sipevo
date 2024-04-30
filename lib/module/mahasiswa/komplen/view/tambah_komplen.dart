@@ -3,22 +3,26 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sipevo/core.dart';
-import '../controller/tambah_komplen_controller.dart';
 import 'package:get/get.dart';
 
-class TambahKomplenView extends StatelessWidget {
-  const TambahKomplenView({super.key});
+class TambahKomplen extends StatelessWidget {
+  const TambahKomplen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<TambahKomplenController>(
-      init: TambahKomplenController(),
+    return GetBuilder<KomplenController>(
+      init: KomplenController(),
       builder: (controller) {
-        controller.view = this;
-
         return Scaffold(
           appBar: AppBar(
-            title: const Text("Tambah Komplen"),
+            title: Text("Tambah Komplen"),
+            leading: IconButton(
+              onPressed: () => Get.back(result: () => KomplenView()),
+              icon: const Icon(
+                Icons.arrow_back,
+                size: 24.0,
+              ),
+            ),
           ),
           body: SingleChildScrollView(
             child: Container(
@@ -28,7 +32,6 @@ class TambahKomplenView extends StatelessWidget {
                 child: Column(
                   children: [
                     // // VIEW FOTO
-
                     InkWell(
                       onTap: () async {
                         try {
@@ -77,14 +80,14 @@ class TambahKomplenView extends StatelessWidget {
                         ],
                       ),
                     ),
-
                     // // VIEW FOTO
-
                     TextFormField(
                       validator: (value) =>
                           value == '' ? 'Jangan Kosong' : null,
                       controller: controller.subjectController,
-                      maxLength: 30,
+                      keyboardType: TextInputType.text,
+                      textInputAction: TextInputAction.next,
+                      cursorColor: AppColors.primarySwatch,
                       decoration: const InputDecoration(
                         labelText: 'Subject',
                         labelStyle: TextStyle(
@@ -102,7 +105,9 @@ class TambahKomplenView extends StatelessWidget {
                       validator: (value) =>
                           value == '' ? 'Jangan Kosong' : null,
                       controller: controller.descriptionController,
-                      maxLength: 255,
+                      keyboardType: TextInputType.text,
+                      textInputAction: TextInputAction.next,
+                      cursorColor: AppColors.primarySwatch,
                       decoration: const InputDecoration(
                         labelText: 'Description',
                         labelStyle: TextStyle(
@@ -141,7 +146,7 @@ class TambahKomplenView extends StatelessWidget {
                       height: 20.0,
                     ),
                     Hero(
-                      tag: "login_btn",
+                      tag: "tambahkomplen_button",
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           elevation: 0,

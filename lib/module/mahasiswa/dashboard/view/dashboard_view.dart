@@ -10,7 +10,7 @@ import 'package:get/get.dart';
 class DashboardView extends StatelessWidget {
   const DashboardView({super.key});
 
-  // URL tujuan
+  // URL
   final String _url = 'https://vokasi.unesa.ac.id/';
 
   @override
@@ -60,13 +60,13 @@ class DashboardView extends StatelessWidget {
                             ),
                           ),
                         ),
-                        // Tambahkan widget Positioned baru di sini
+
                         Positioned(
                           right: 20,
                           top: 20,
                           child: Text(
                             DateFormat('dd MMMM yyyy')
-                                .format(DateTime.now()), // Format tanggal
+                                .format(DateTime.now()),
                             style: const TextStyle(
                               fontSize: 16.0,
                               color: Colors.white,
@@ -75,10 +75,10 @@ class DashboardView extends StatelessWidget {
                         ),
                         Positioned(
                           right: 20,
-                          top: 40, // Posisi di sudut kanan bawah
+                          top: 40,
                           child: Text(
                             DateFormat('HH:mm')
-                                .format(DateTime.now()), // Format jam
+                                .format(DateTime.now()),
                             style: const TextStyle(
                               fontSize: 16.0,
                               color: Colors.white,
@@ -89,7 +89,7 @@ class DashboardView extends StatelessWidget {
                         // menu
                         const Positioned(
                           bottom:
-                              20, // Atau nilai lain untuk menyesuaikan posisi lebih ke atas
+                              20,
                           left: 0,
                           right: 0,
                           child: Meynu(),
@@ -97,7 +97,7 @@ class DashboardView extends StatelessWidget {
                       ],
                     ),
                   ),
-                  // JARAK ANTARA ATASNYA TERLALU JAUH GIMANA NGATASINNYA BINGUNG SAYA BRO
+
                   Padding(
                     padding: const EdgeInsets.all(24.0),
                     child: Row(
@@ -117,7 +117,7 @@ class DashboardView extends StatelessWidget {
                             if (await canLaunchUrl(url)) {
                               await launchUrl(url);
                             } else {
-                              // Handle the error or show a message if the URL can't be opened
+
                               print('Could not launch $url');
                             }
                           },

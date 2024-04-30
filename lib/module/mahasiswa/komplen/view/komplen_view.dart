@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sipevo/module/mahasiswa/komplen/view/tambah_komplen.dart';
 import 'package:sipevo/module/models/complaints.dart';
 import '../controller/komplen_controller.dart';
 import 'package:sipevo/core.dart';
@@ -175,7 +176,8 @@ class KomplenView extends StatelessWidget {
             ),
           ),
           floatingActionButton: FloatingActionButton(
-            onPressed: () => Get.to(() => const TambahKomplenView()),
+            heroTag: "tambah_komplen",
+            onPressed: () => Get.to(() => const TambahKomplen()),
             backgroundColor: Colors.red,
             child: const Icon(Icons.add, color: Colors.white),
           ),

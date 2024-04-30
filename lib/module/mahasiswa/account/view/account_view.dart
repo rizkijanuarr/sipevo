@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sipevo/module/mahasiswa/account/view/update_account.dart';
 import '../controller/account_controller.dart';
 import 'package:sipevo/core.dart';
 import 'package:get/get.dart';
@@ -17,6 +18,13 @@ class AccountView extends StatelessWidget {
           appBar: AppBar(
             title: const Text("Profile"),
             actions: [
+              IconButton(
+                onPressed: () => controller.refreshProfile(),
+                icon: const Icon(
+                  Icons.refresh,
+                  size: 24.0,
+                ),
+              ),
               IconButton(
                 onPressed: () async {
                   await SharedPrefsHelper.removeToken();
@@ -252,12 +260,13 @@ class AccountView extends StatelessWidget {
               ],
             ),
           ),
-          // floatingActionButton: FloatingActionButton(
-          //   onPressed: () =>
-          //       Get.to(UpdateAccountView(), preventDuplicates: false),
-          //   backgroundColor: Colors.red,
-          //   child: const Icon(Icons.edit, color: Colors.white),
-          // ),
+          floatingActionButton: FloatingActionButton(
+            heroTag: "profile",
+            onPressed: () =>
+                Get.to(() => const UpdateAccount(), preventDuplicates: false),
+            backgroundColor: Colors.red,
+            child: const Icon(Icons.edit, color: Colors.white),
+          ),
         );
       },
     );
