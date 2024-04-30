@@ -23,7 +23,7 @@ class UpdateComplaintsController extends GetxController {
   void updateComplaintStatus(String newStatus) async {
     String? token = await SharedPrefsHelper.getToken();
     var response = await http.post(
-      Uri.parse(AppRoutes.updateStatusComplaints),
+      Uri.parse(AppRoutes.updateComplaints),
       headers: {
         'Authorization': 'Bearer $token',
         'Content-Type': 'application/json',

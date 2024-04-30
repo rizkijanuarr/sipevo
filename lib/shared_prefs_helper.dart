@@ -15,7 +15,6 @@ class SharedPrefsHelper {
     return prefs.getString(_keyToken);
   }
 
-  // Tambahkan metode lain jika perlu, misalnya untuk menghapus token
   static Future<void> removeToken() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove(_keyToken);
@@ -31,8 +30,6 @@ class SharedPrefsHelper {
     return prefs.getString(_keyUserRole);
   }
 
-  // static const String _keyUserName = "userName";
-  // future
   static Future<void> setUserName(String name) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString(_keyUserName, name);

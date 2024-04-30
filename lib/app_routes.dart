@@ -1,28 +1,35 @@
 class AppRoutes {
-  static const baseURL = 'http://192.168.1.14/sipevo';
-  static String register = '$baseURL/register.php';
+  static const baseURL = 'https://sipevo.my.id/public/api';
 
-  static const complaints = '$baseURL/complaints';
-  static String complaintsList = '$complaints/get_complaints.php';
-  static String complaintsListMahasiswa =
-      '$complaints/get_complaints_mahasiswa.php';
-  static String addComplaintsMahasiswa =
-      '$complaints/add_complaints_mahasiswa.php';
+  // AUTH
+  static const baseAUTH = '$baseURL/auth';
+  static String login = '$baseAUTH/login.php';
+  static String register = '$baseAUTH/register.php';
 
-  static String updateStatusComplaints = '$complaints/update_status.php';
-  static String deleteComplaints = '$complaints/delete_complaints.php';
+  // USER
+  static const baseUSER = '$baseURL/user';
+  static String getUser = '$baseUSER/get.php';
+  static String addUser = '$baseUSER/add.php';
+  static String updateUser = '$baseUSER/update.php';
+  static String deleteUser = '$baseUSER/delete.php';
 
-  static const logs = '$baseURL/logs';
-  static String logsList = '$logs/logs_manager.php';
+  // PROFIL
+  static String profile = '$baseUSER/profile.php';
+  static String updateProfile = '$baseUSER/update_profile.php';
 
-  static const user = '$baseURL/user';
-  static String listUser = '$user/get_users.php';
-  static String addUser = '$user/add_user.php';
-  static String updateUser = '$user/update_user.php';
-  static String deleteUser = '$user/delete_user.php';
+  // COMPLAINTS
+  static const baseCOMPLAINTS = '$baseURL/complaints';
+  static String getComplaints = '$baseCOMPLAINTS/get.php';
+  static String addComplaints = '$baseCOMPLAINTS/add.php';
+  static String updateComplaints = '$baseCOMPLAINTS/update.php';
+  static String deleteComplaints = '$baseCOMPLAINTS/delete.php';
 
-  static String profile = '$user/profile.php';
-  static String updateProfile = '$user/update_profile.php';
+  // COMPLAINTS MAHASISWA
+  static const baseCOMPLAINTSMAHASISWA = '$baseCOMPLAINTS/mahasiswa';
+  static String getComplaintsMahasiswa = '$baseCOMPLAINTSMAHASISWA/get.php';
+  static String addComplaintsMahasiswa = '$baseCOMPLAINTSMAHASISWA/add.php';
 
-  static String login = '$baseURL/login.php';
+  // LOGS SYSTEM
+  static const baseLOGS = '$baseURL/logs';
+  static String getLogs = '$baseLOGS/logs_manager.php';
 }

@@ -39,7 +39,7 @@ class LogsController extends GetxController {
   void fetchLogs() async {
     String? token = await SharedPrefsHelper.getToken();
     final response = await http.get(
-      Uri.parse(AppRoutes.logsList),
+      Uri.parse(AppRoutes.getLogs),
       headers: {
         'Authorization': 'Bearer $token',
         'Content-Type': 'application/json', // Pastikan ini diperlukan oleh API

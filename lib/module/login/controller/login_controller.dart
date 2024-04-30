@@ -5,12 +5,22 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:sipevo/app_routes.dart';
 import 'package:sipevo/core.dart';
-import 'package:sipevo/module/admin/beranda/view/beranda_view.dart';
 import 'package:sipevo/shared_prefs_helper.dart';
 import '../view/login_view.dart';
 
 class LoginController extends GetxController {
   LoginView? view;
+
+  // ICON PASSWORD
+  // Property to track if password is visible
+  bool showPassword = false;
+
+  // Method to toggle the visibility of the password
+  void togglePasswordVisibility() {
+    showPassword = !showPassword;
+    update(); // Notify listeners about the change
+  }
+  // END ICON PASSWORD
 
   var controllerNohp = TextEditingController();
   var controllerPassword = TextEditingController();
@@ -19,17 +29,17 @@ class LoginController extends GetxController {
   void navigateBasedOnRole(String role) {
     switch (role) {
       case 'admin':
-        Get.off(const NavAdmin()); // Navigasi ke Beranda Admin
+        Get.offAll(() => NavAdmin()); // Navigasi ke Beranda Admin
         break;
       case 'operator':
-        Get.off(const NavbaropView()); // Navigasi ke Beranda Admin
+        Get.offAll(() => NavbaropView()); // Navigasi ke Beranda Admin
         break;
       case 'mahasiswa':
-        Get.off(const NavbarmhsView()); // Navigasi ke Beranda Admin
+        Get.offAll(() => NavbarmhsView()); // Navigasi ke Beranda Admin
         break;
       default:
-        Get.off(
-            const LoginView()); // Kembali ke LoginView jika role tidak dikenali
+        Get.offAll(
+            () => LoginView()); // Kembali ke LoginView jika role tidak dikenali
     }
   }
 
@@ -53,6 +63,9 @@ class LoginController extends GetxController {
             'password': controllerPassword.text,
           }),
         );
+
+        print("Status Code: ${response.statusCode}");
+        print("Response Body: ${response.body}");
 
         final responseData = jsonDecode(response.body);
 

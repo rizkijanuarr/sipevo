@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sipevo/module/models/complaints.dart';
 import '../controller/komplen_controller.dart';
 import 'package:sipevo/core.dart';
 import 'package:get/get.dart';
@@ -11,9 +12,7 @@ class KomplenView extends StatelessWidget {
     return GetBuilder<KomplenController>(
       init: KomplenController(),
       builder: (controller) {
-        // Removed the duplicate builder property and combined the logic here
-        controller.view =
-            this; // Assuming this line is necessary for your logic
+        controller.view = this;
         return Scaffold(
           appBar: AppBar(
             title: const Text("List Complaints"),
@@ -40,40 +39,120 @@ class KomplenView extends StatelessWidget {
                           children: [
                             Card(
                               child: Padding(
-                                padding: const EdgeInsets.all(8.0),
+                                padding: EdgeInsets.all(10.0),
                                 child: Row(
                                   children: [
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(right: 10.0),
+                                      child: Stack(
+                                        alignment: Alignment.center,
                                         children: [
-                                          Text(
-                                              "Subject: ${complaint.subject ?? ''}"),
-                                          const SizedBox(height: 4),
-                                          Text(
-                                              "Deskripsi: ${complaint.description ?? ''}"),
-                                          const SizedBox(height: 8),
-                                          Text(
-                                              "Di proses oleh: ${complaint.updatedByRole ?? ''}"),
-                                          const SizedBox(
-                                            height: 5.0,
-                                          ),
-                                          Chip(
-                                            label: Text(
-                                              complaint.status,
-                                              style: const TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 12.0),
+                                          ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(12),
+                                            child: Image.network(
+                                              controller.basePhotoComplaints +
+                                                  complaint.photoComplaints!,
+                                              width: 100,
+                                              height: 100,
+                                              fit: BoxFit.cover,
+                                              loadingBuilder:
+                                                  (BuildContext context,
+                                                      Widget child,
+                                                      ImageChunkEvent?
+                                                          loadingProgress) {
+                                                if (loadingProgress == null)
+                                                  return child;
+                                                return Container(
+                                                  width: 200,
+                                                  height: 200,
+                                                  child: Center(
+                                                    child:
+                                                        CircularProgressIndicator(
+                                                      value: loadingProgress
+                                                                  .expectedTotalBytes !=
+                                                              null
+                                                          ? loadingProgress
+                                                                  .cumulativeBytesLoaded /
+                                                              loadingProgress
+                                                                  .expectedTotalBytes!
+                                                          : null,
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                              errorBuilder: (context, error,
+                                                      stackTrace) =>
+                                                  const Icon(
+                                                      Icons.broken_image),
                                             ),
-                                            backgroundColor: complaint.status
-                                                        .toLowerCase() ==
-                                                    'open'
-                                                ? Colors.orange[500]
-                                                : Colors.red[500],
+                                          ),
+                                          Positioned(
+                                            top: 0,
+                                            left: 0,
+                                            child: Container(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 6, vertical: 2),
+                                              decoration: BoxDecoration(
+                                                color: _getStatusColor(complaint
+                                                    .status), // Mengambil warna berdasarkan status
+                                                borderRadius: BorderRadius.only(
+                                                  topLeft: Radius.circular(50),
+                                                ),
+                                              ),
+                                              child: Text(
+                                                complaint.status,
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: const TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 8.0,
+                                                ),
+                                              ),
+                                            ),
                                           ),
                                         ],
                                       ),
+                                    ),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          complaint.subject,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                            fontSize: 14.0,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Text(
+                                          complaint.description,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                            fontSize: 12.0,
+                                          ),
+                                        ),
+                                        Text(
+                                          complaint.location!,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                            fontSize: 12.0,
+                                          ),
+                                        ),
+                                        Text(
+                                          complaint.createdAt,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                            fontSize: 12.0,
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 ),
@@ -96,7 +175,7 @@ class KomplenView extends StatelessWidget {
             ),
           ),
           floatingActionButton: FloatingActionButton(
-            onPressed: () => Get.to(const TambahKomplenView()),
+            onPressed: () => Get.to(() => const TambahKomplenView()),
             backgroundColor: Colors.red,
             child: const Icon(Icons.add, color: Colors.white),
           ),
@@ -104,5 +183,19 @@ class KomplenView extends StatelessWidget {
         );
       },
     );
+  }
+
+  // Fungsi untuk mendapatkan warna berdasarkan status
+  Color _getStatusColor(String status) {
+    switch (status) {
+      case 'Tunggu sebentar':
+        return Colors.deepOrange[300]!;
+      case 'Sedang diproses':
+        return Colors.red[300]!;
+      case 'Telah diselesaikan':
+        return Colors.green[300]!;
+      default:
+        return Colors.grey[300]!;
+    }
   }
 }

@@ -121,9 +121,7 @@ class UpdateUserController extends GetxController {
     controllerId.text = user.id.toString();
     controllerName.text = user.name;
     controllerNohp.text = user.nohp;
-    controllerEmail.text = user.email;
     selectedRole.value = user.role;
-    controllerAddress.text = user.address;
 
     // Set peran default jika perlu
     selectedRole.value = roles.contains(user.role) ? user.role : roles[0];

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sipevo/core.dart';
 import 'package:get/get.dart';
+import 'package:sipevo/util/color.dart';
 
 class RegisterView extends StatelessWidget {
   const RegisterView({super.key});
@@ -19,7 +20,7 @@ class RegisterView extends StatelessWidget {
             elevatedButtonTheme: ElevatedButtonThemeData(
               style: ElevatedButton.styleFrom(
                 elevation: 0,
-                backgroundColor: const Color(0xff0f9565),
+                backgroundColor: AppColors.primarySwatch,
                 shape: const StadiumBorder(),
                 maximumSize: const Size(double.infinity, 56),
                 minimumSize: const Size(double.infinity, 56),
@@ -27,9 +28,9 @@ class RegisterView extends StatelessWidget {
             ),
             inputDecorationTheme: InputDecorationTheme(
               filled: true,
-              fillColor: const Color(0xff0f9565).withOpacity(0.1),
-              iconColor: const Color(0xFF6F35A5),
-              prefixIconColor: const Color(0xff0f9565),
+              fillColor: AppColors.primarySwatch[50],
+              iconColor: AppColors.primarySwatch,
+              prefixIconColor: AppColors.primarySwatch,
               contentPadding:
                   const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
               border: const OutlineInputBorder(
@@ -79,7 +80,7 @@ class RegisterView extends StatelessWidget {
                                         keyboardType:
                                             TextInputType.emailAddress,
                                         textInputAction: TextInputAction.next,
-                                        cursorColor: const Color(0xff0f9565),
+                                        cursorColor: AppColors.primarySwatch,
                                         onSaved: (name) {},
                                         decoration: const InputDecoration(
                                           hintText: "Name",
@@ -99,7 +100,7 @@ class RegisterView extends StatelessWidget {
                                         controller: controller.controllerNohp,
                                         keyboardType: TextInputType.number,
                                         textInputAction: TextInputAction.next,
-                                        cursorColor: const Color(0xff0f9565),
+                                        cursorColor: AppColors.primarySwatch,
                                         onSaved: (phone) {},
                                         decoration: const InputDecoration(
                                           hintText: "No. Phone",
@@ -116,61 +117,85 @@ class RegisterView extends StatelessWidget {
                                         validator: (value) => value == ''
                                             ? 'Jangan Kosong'
                                             : null,
-                                        controller: controller.controllerEmail,
-                                        keyboardType:
-                                            TextInputType.emailAddress,
-                                        textInputAction: TextInputAction.next,
-                                        cursorColor: const Color(0xff0f9565),
-                                        onSaved: (email) {},
-                                        decoration: const InputDecoration(
-                                          hintText: "Email",
-                                          prefixIcon: Padding(
-                                            padding: EdgeInsets.all(16.0),
-                                            child: Icon(Icons.email),
-                                          ),
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        height: 16.0,
-                                      ),
-                                      TextFormField(
-                                        validator: (value) => value == ''
-                                            ? 'Jangan Kosong'
-                                            : null,
                                         controller: controller.controllerPass,
                                         textInputAction: TextInputAction.done,
-                                        obscureText: true,
-                                        cursorColor: const Color(0xff0f9565),
-                                        decoration: const InputDecoration(
+                                        obscureText: !controller
+                                            .showPassword, // Toggle based on controller state
+                                        cursorColor: AppColors.primarySwatch,
+                                        decoration: InputDecoration(
                                           hintText: "Password",
-                                          prefixIcon: Padding(
+                                          prefixIcon: const Padding(
                                             padding: EdgeInsets.all(16.0),
                                             child: Icon(Icons.lock),
                                           ),
+                                          suffixIcon: IconButton(
+                                            icon: Icon(
+                                              // Toggle the icon dynamically
+                                              controller.showPassword
+                                                  ? Icons.visibility
+                                                  : Icons.visibility_off,
+                                              color: AppColors.primarySwatch,
+                                            ),
+                                            onPressed: () {
+                                              // Update the state to show or hide the password
+                                              controller
+                                                  .togglePasswordVisibility();
+                                            },
+                                          ),
                                         ),
                                       ),
                                       const SizedBox(
                                         height: 16.0,
                                       ),
-                                      TextFormField(
-                                        validator: (value) => value == ''
-                                            ? 'Jangan Kosong'
-                                            : null,
-                                        controller:
-                                            controller.controllerAddress,
-                                        keyboardType: TextInputType.text,
-                                        textInputAction: TextInputAction.next,
-                                        cursorColor: const Color(0xff0f9565),
-                                        onSaved: (address) {},
+                                      DropdownButtonFormField<String>(
+                                        value: controller.selectedAngkatan,
+                                        onChanged: (String? newValue) {
+                                          controller.selectedAngkatan =
+                                              newValue!;
+                                          controller.update();
+                                        },
+                                        items: controller.angkatanItems
+                                            .map<DropdownMenuItem<String>>(
+                                                (String value) {
+                                          return DropdownMenuItem<String>(
+                                            value: value,
+                                            child: Text(value),
+                                          );
+                                        }).toList(),
                                         decoration: const InputDecoration(
-                                          hintText: "Address",
+                                          hintText: "Mahasiswa Angkatan",
                                           prefixIcon: Padding(
                                             padding: EdgeInsets.all(16.0),
-                                            child: Icon(Icons.location_on),
+                                            child: Icon(Icons.school),
                                           ),
                                         ),
                                       ),
                                       const SizedBox(height: 16.0),
+                                      DropdownButtonFormField<String>(
+                                        value: controller.selectedProdi,
+                                        onChanged: (String? newValue) {
+                                          controller.selectedProdi = newValue!;
+                                          controller.update();
+                                        },
+                                        items: controller.prodiItems
+                                            .map<DropdownMenuItem<String>>(
+                                                (String value) {
+                                          return DropdownMenuItem<String>(
+                                            value: value,
+                                            child: Text(value),
+                                          );
+                                        }).toList(),
+                                        decoration: const InputDecoration(
+                                          hintText: "Prodi",
+                                          prefixIcon: Padding(
+                                            padding: EdgeInsets.all(16.0),
+                                            child: Icon(Icons.book),
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 16.0,
+                                      ),
                                       Hero(
                                         tag: "login_btn",
                                         child: ElevatedButton(
@@ -214,7 +239,7 @@ class RegisterView extends StatelessWidget {
                                             child: const Text(
                                               "Login",
                                               style: TextStyle(
-                                                color: Color(0xff0f9565),
+                                                color: AppColors.primarySwatch,
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),

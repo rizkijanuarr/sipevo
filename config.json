@@ -1,5 +1,16 @@
 {
     "modules": [
+        "login",
+        "register",
+        "admin/nav_admin",
+        "admin/beranda",
+        "admin/complaints",
+        "admin/complaints/update_complaints",
+        "admin/logs",
+        "admin/profile",
+        "admin/user",
+        "admin/user/tambah_user",
+        "admin/user/update_user",
         "operator/navbarop",
         "operator/home",
         "operator/komplain",
@@ -9,8 +20,8 @@
         "mahasiswa/dashboard",
         "mahasiswa/komplen",
         "mahasiswa/komplen/tambah_komplen",
-        "mahasiswa/komplen/history_komplen",
-        "mahasiswa/account"
+        "mahasiswa/account",
+        "mahasiswa/account/update_account"
     ],
     "module_directory_name": "module",
     "experimental_mode": false,

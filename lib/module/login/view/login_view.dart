@@ -2,25 +2,27 @@ import 'package:flutter/material.dart';
 // Import package http
 import 'package:sipevo/core.dart';
 import 'package:get/get.dart';
+import 'package:sipevo/util/color.dart';
 
 class LoginView extends StatelessWidget {
   const LoginView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final LoginController? controller = Get.find<LoginController>();
+
     return GetBuilder<LoginController>(
-      init: LoginController(),
       builder: (controller) {
         controller.view = this;
 
         return Theme(
           data: ThemeData(
-            primaryColor: const Color(0xff0f9565),
+            primaryColor: AppColors.primarySwatch,
             scaffoldBackgroundColor: Colors.white,
             elevatedButtonTheme: ElevatedButtonThemeData(
               style: ElevatedButton.styleFrom(
                 elevation: 0,
-                backgroundColor: const Color(0xff0f9565),
+                backgroundColor: AppColors.primarySwatch,
                 shape: const StadiumBorder(),
                 maximumSize: const Size(double.infinity, 56),
                 minimumSize: const Size(double.infinity, 56),
@@ -28,9 +30,9 @@ class LoginView extends StatelessWidget {
             ),
             inputDecorationTheme: InputDecorationTheme(
               filled: true,
-              fillColor: const Color(0xff0f9565).withOpacity(0.1),
-              iconColor: const Color(0xFF6F35A5),
-              prefixIconColor: const Color(0xff0f9565),
+              fillColor: AppColors.primarySwatch[50],
+              iconColor: AppColors.primarySwatch,
+              prefixIconColor: AppColors.primarySwatch,
               contentPadding:
                   const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
               border: const OutlineInputBorder(
@@ -77,10 +79,9 @@ class LoginView extends StatelessWidget {
                                             ? 'Jangan Kosong'
                                             : null,
                                         controller: controller.controllerNohp,
-                                        keyboardType:
-                                            TextInputType.emailAddress,
+                                        keyboardType: TextInputType.number,
                                         textInputAction: TextInputAction.next,
-                                        cursorColor: const Color(0xff0f9565),
+                                        cursorColor: AppColors.primarySwatch,
                                         onSaved: (phone) {},
                                         decoration: const InputDecoration(
                                           hintText: "Your phone",
@@ -100,13 +101,28 @@ class LoginView extends StatelessWidget {
                                           controller:
                                               controller.controllerPassword,
                                           textInputAction: TextInputAction.done,
-                                          obscureText: true,
-                                          cursorColor: const Color(0xff0f9565),
-                                          decoration: const InputDecoration(
+                                          obscureText: !controller
+                                              .showPassword, // Toggle based on controller state
+                                          cursorColor: AppColors.primarySwatch,
+                                          decoration: InputDecoration(
                                             hintText: "Your password",
-                                            prefixIcon: Padding(
+                                            prefixIcon: const Padding(
                                               padding: EdgeInsets.all(16.0),
                                               child: Icon(Icons.lock),
+                                            ),
+                                            suffixIcon: IconButton(
+                                              icon: Icon(
+                                                // Toggle the icon dynamically
+                                                controller.showPassword
+                                                    ? Icons.visibility
+                                                    : Icons.visibility_off,
+                                                color: AppColors.primarySwatch,
+                                              ),
+                                              onPressed: () {
+                                                // Update the state to show or hide the password
+                                                controller
+                                                    .togglePasswordVisibility();
+                                              },
                                             ),
                                           ),
                                         ),
@@ -143,7 +159,7 @@ class LoginView extends StatelessWidget {
                                               try {
                                                 print(
                                                     "Navigating to RegisterView");
-                                                Get.to(RegisterView());
+                                                Get.to(() => RegisterView());
                                               } catch (e) {
                                                 print(
                                                     "Error navigating to RegisterView: $e");
@@ -152,7 +168,7 @@ class LoginView extends StatelessWidget {
                                             child: const Text(
                                               "Sign Up",
                                               style: TextStyle(
-                                                color: Color(0xff0f9565),
+                                                color: AppColors.primarySwatch,
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),

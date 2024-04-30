@@ -19,7 +19,7 @@ class ProfileView extends StatelessWidget {
               IconButton(
                 onPressed: () async {
                   await SharedPrefsHelper.removeToken();
-                  Get.offAll(LoginView());
+                  Get.offAll(() => LoginView());
                 },
                 icon: const Icon(
                   Icons.logout,

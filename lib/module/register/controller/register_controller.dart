@@ -10,11 +10,58 @@ import 'package:http/http.dart' as http;
 class RegisterController extends GetxController {
   RegisterView? view;
 
+  // IKON PASSWORD
+  bool showPassword = false;
+
+  void togglePasswordVisibility() {
+    showPassword = !showPassword;
+    update(); // This triggers a UI update if you are using GetX
+  }
+  // END IKON
+
+  // DROPDOWN
+  String? selectedAngkatan;
+  String? selectedProdi;
+
+  final List<String> angkatanItems = [
+    '2019',
+    '2020',
+    '2021',
+    '2022',
+    '2023',
+    '2024',
+    '2025'
+  ];
+
+  final List<String> prodiItems = [
+    'D-4 Teknik Mesin',
+    'D-4 Teknik Listrik',
+    'D-4 Teknik Sipil',
+    'D-4 Transportasi',
+    'D-4 Tata Boga',
+    'D-4 Tata Busana',
+    'D-4 Manajemen Informatika',
+    'D-4 Administrasi Negara',
+    'D-4 Desain Grafis',
+    'D-4 Kepelatihan Olahraga'
+  ];
+
+  void updateSelectedAngkatan(String? newAngkatan) {
+    selectedAngkatan = newAngkatan;
+    update(); // This triggers a UI update
+  }
+
+  void updateSelectedProdi(String? newProdi) {
+    selectedProdi = newProdi;
+    update(); // This triggers a UI update
+  }
+  // END DROPDOWN
+
   var controllerName = TextEditingController();
   var controllerNohp = TextEditingController();
-  var controllerEmail = TextEditingController();
   var controllerPass = TextEditingController();
-  var controllerAddress = TextEditingController();
+  var controllerMahasiswaAngkatan = ();
+  var controllerProdi = ();
 
   var formKey = GlobalKey<FormState>();
 
@@ -23,9 +70,9 @@ class RegisterController extends GetxController {
     var response = await http.post(url, body: {
       'name': controllerName.text,
       'nohp': controllerNohp.text,
-      'email': controllerEmail.text,
       'pass': controllerPass.text,
-      'address': controllerAddress.text,
+      'mahasiswa_angkatan': selectedAngkatan,
+      'prodi': selectedProdi,
     });
 
     print("Sending registration data to server...");
@@ -45,11 +92,6 @@ class RegisterController extends GetxController {
           duration: const Duration(seconds: 5),
         );
         print("Registration successful");
-        // // Delay navigation to allow snackbar to be shown
-        // Future.delayed(const Duration(seconds: 5), () {
-        //   // Navigate to LoginView
-        //   Get.off(() => LoginView());
-        // });
       } else {
         Get.snackbar(
           'Error',
@@ -78,8 +120,8 @@ class RegisterController extends GetxController {
   void clearTextFields() {
     controllerName.clear();
     controllerNohp.clear();
-    controllerEmail.clear();
     controllerPass.clear();
-    controllerAddress.clear();
+    selectedAngkatan = null;
+    selectedProdi = null;
   }
 }

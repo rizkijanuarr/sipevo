@@ -1,20 +1,20 @@
 class User {
-  final int? id; // Make id nullable if json['id_user'] can be null
+  final int? id;
   final String name;
   final String nohp;
-  final String email;
   final String role;
   final String photo;
-  final String address;
+  final String mahasiswa_angkatan;
+  final String prodi;
 
   User({
-    this.id, // Remove required if id can be null
+    this.id,
     required this.name,
     required this.nohp,
-    required this.email,
     required this.role,
     required this.photo,
-    required this.address,
+    required this.mahasiswa_angkatan,
+    required this.prodi,
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
@@ -24,19 +24,18 @@ class User {
           ? (json['id_user'] is String
               ? int.tryParse(json['id_user'])
               : json['id_user'])
-          : null, // Safely handle null and type conversion
-      name: json['name'] ??
-          '', // Provide default values for non-nullable fields if necessary
+          : null,
+      name: json['name'] ?? '',
       nohp: json['nohp'] ?? '',
-      email: json['email'] ?? '',
       role: json['role'] ?? '',
       photo: json['photo'] ?? '',
-      address: json['address'] ?? '',
+      mahasiswa_angkatan: json['mahasiswa_angkatan'] ?? '',
+      prodi: json['prodi'] ?? '',
     );
   }
 
   @override
   String toString() {
-    return 'User{id: $id, name: $name, nohp: $nohp, email: $email, role: $role, photo: $photo, address: $address}';
+    return 'User{id: $id, name: $name, nohp: $nohp,  role: $role, photo: $photo, mahasiswa_angkatan: $mahasiswa_angkatan, prodi: $prodi}';
   }
 }

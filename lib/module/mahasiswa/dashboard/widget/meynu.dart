@@ -63,14 +63,14 @@ class _MeynuState extends State<Meynu> {
                       ),
                     ),
                   ),
-                  Obx(() => Text(controller.userRole.value)),
+                  Obx(() => Text(controller.userRole.value ?? 'mahasiswa')),
                 ],
               ),
               const SizedBox(
                 height: 10.0,
               ),
               Dot(
-                color: Colors.green,
+                color: AppColors.primarySwatch,
                 strokeWidth: 2.0,
                 dashPattern: const [10.0, 10.0],
                 gap: 2.0,

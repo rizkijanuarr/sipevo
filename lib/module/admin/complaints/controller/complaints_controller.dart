@@ -36,7 +36,7 @@ class ComplaintsController extends GetxController {
   void fetchComplaints() async {
     String? token = await SharedPrefsHelper.getToken();
     var response = await http.get(
-      Uri.parse(AppRoutes.complaintsList),
+      Uri.parse(AppRoutes.getComplaints),
       headers: {
         'Authorization': 'Bearer $token',
         'Content-Type': 'application/json',

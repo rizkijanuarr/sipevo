@@ -27,7 +27,7 @@ class DashboardView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.4,
+                    height: MediaQuery.of(context).size.height * 0.3,
                     width: MediaQuery.of(context).size.width,
                     child: Stack(
                       children: [
@@ -37,7 +37,7 @@ class DashboardView extends StatelessWidget {
                               child: Container(
                                 width: MediaQuery.of(context).size.width,
                                 decoration: const BoxDecoration(
-                                  color: Color(0xff0f9565),
+                                  color: AppColors.primarySwatch,
                                 ),
                               ),
                             ),
@@ -125,7 +125,7 @@ class DashboardView extends StatelessWidget {
                             "See all",
                             style: TextStyle(
                               fontSize: 14.0,
-                              color: Color(0xff0f9565),
+                              color: AppColors.primarySwatch,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -199,8 +199,8 @@ class DashboardView extends StatelessWidget {
                                     shape: BoxShape.circle,
                                     color: (Theme.of(context).brightness ==
                                                 Brightness.dark
-                                            ? const Color(0xff0f9565)
-                                            : const Color(0xff0f9565)
+                                            ? AppColors.primarySwatch
+                                            : AppColors.primarySwatch
                                                 .withOpacity(
                                                 0.6,
                                               ))

@@ -77,14 +77,14 @@ class NavbarmhsView extends StatelessWidget {
                               Icon(
                                 menu["icon"] as IconData,
                                 color: index == controller.selectedIndex
-                                    ? const Color(0xff0f9565)
+                                    ? AppColors.primarySwatch
                                     : Colors.grey,
                               ),
                               if (index == controller.selectedIndex)
                                 Text(
                                   menu["label"] as String,
                                   style: const TextStyle(
-                                    color: Color(0xff0f9565),
+                                    color: AppColors.primarySwatch,
                                   ),
                                 ),
                             ],

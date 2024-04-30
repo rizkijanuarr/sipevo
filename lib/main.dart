@@ -4,22 +4,24 @@ import 'package:sipevo/core.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   final String? token = await SharedPrefsHelper.getToken();
   final String? userRole = await SharedPrefsHelper.getUserRole();
 
-  Widget startingWidget = const LoginView(); // Default ke LoginView
+  Get.put(LoginController());
+  Widget startingWidget = const LoginView();
+
   if (token != null && userRole != null) {
     switch (userRole) {
       case 'admin':
-        startingWidget = const NavAdmin(); // Navigasi ke Beranda Admin
+        startingWidget = const NavAdmin();
         break;
       case 'operator':
-        startingWidget = const NavbaropView(); // Navigasi ke Beranda Operator
+        startingWidget = const NavbaropView();
         break;
       case 'mahasiswa':
-        startingWidget = const NavbarmhsView(); // Navigasi ke Beranda Mahasiswa
+        startingWidget = const NavbarmhsView();
         break;
-      // Tambahkan case untuk role lainnya
     }
   }
 
@@ -28,24 +30,27 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   final Widget startingWidget;
-  const MyApp({super.key, required this.startingWidget});
+  const MyApp({Key? key, required this.startingWidget}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: true,
       theme: ThemeData(
         useMaterial3: true,
-        scaffoldBackgroundColor: Colors.grey[100],
+        scaffoldBackgroundColor: Colors.grey[300],
         appBarTheme: const AppBarTheme(
-          backgroundColor: Color(0xff0f9565),
+          backgroundColor: AppColors.primarySwatch,
           titleTextStyle: TextStyle(
-              color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
           iconTheme: IconThemeData(color: Colors.white),
           elevation: 0,
         ),
       ),
-      home: startingWidget, // Gunakan startingWidget sebagai halaman awal
+      home: startingWidget,
     );
   }
 }

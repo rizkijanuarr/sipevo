@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "843628105965",
+    "project_id": "sipevo-eff67",
+    "storage_bucket": "sipevo-eff67.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:843628105965:android:0c74779557d058eabf7ce4",
+        "android_client_info": {
+          "package_name": "com.unesa.sipevo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "843628105965-im713lolsinhcsao4fvidahb2bohhee4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.unesa.sipevo",
+            "certificate_hash": "ce633450477c78e7993af3d18e2371844c256967"
+          }
+        },
+        {
+          "client_id": "843628105965-p7ife754dsfirhdqr4vfcul142sd89r4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.unesa.sipevo",
+            "certificate_hash": "3769853973d70103d689ba1d11ab539c65616203"
+          }
+        },
+        {
+          "client_id": "843628105965-680mimglboluo9gsll082do8mv5sh0of.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBTBDaHdlHCSiJCqglabMOUf5CJrg_v1cA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "843628105965-680mimglboluo9gsll082do8mv5sh0of.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

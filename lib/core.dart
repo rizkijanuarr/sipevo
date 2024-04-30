@@ -31,8 +31,9 @@ export 'package:sipevo/module/mahasiswa/account/controller/account_controller.da
 export 'package:sipevo/module/mahasiswa/account/view/account_view.dart';
 export 'package:sipevo/module/mahasiswa/dashboard/controller/dashboard_controller.dart';
 export 'package:sipevo/module/mahasiswa/dashboard/view/dashboard_view.dart';
+export 'package:sipevo/module/mahasiswa/dashboard/widget/dot.dart';
+export 'package:sipevo/module/mahasiswa/dashboard/widget/meynu.dart';
 export 'package:sipevo/module/mahasiswa/komplen/controller/komplen_controller.dart';
-
 export 'package:sipevo/module/mahasiswa/komplen/tambah_komplen/controller/tambah_komplen_controller.dart';
 export 'package:sipevo/module/mahasiswa/komplen/tambah_komplen/view/tambah_komplen_view.dart';
 export 'package:sipevo/module/mahasiswa/komplen/view/komplen_view.dart';
@@ -55,4 +56,6 @@ export 'package:sipevo/module/operator/navbarop/controller/navbarop_controller.d
 export 'package:sipevo/module/operator/navbarop/view/navbarop_view.dart';
 export 'package:sipevo/module/register/controller/register_controller.dart';
 export 'package:sipevo/module/register/view/register_view.dart';
+export 'package:sipevo/service/auth_service.dart';
 export 'package:sipevo/shared_prefs_helper.dart';
+export 'package:sipevo/util/color.dart';

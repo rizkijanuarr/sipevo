@@ -37,7 +37,7 @@ class UserController extends GetxController {
     try {
       String? token = await SharedPrefsHelper.getToken();
       final response = await http.get(
-        Uri.parse(AppRoutes.listUser),
+        Uri.parse(AppRoutes.getUser),
         headers: {
           'Authorization': 'Bearer $token',
           'Content-Type':

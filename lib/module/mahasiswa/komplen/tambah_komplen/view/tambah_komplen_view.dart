@@ -1,4 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:sipevo/core.dart';
 import '../controller/tambah_komplen_controller.dart';
 import 'package:get/get.dart';
 
@@ -23,6 +27,59 @@ class TambahKomplenView extends StatelessWidget {
                 key: controller.formKey,
                 child: Column(
                   children: [
+                    // // VIEW FOTO
+
+                    InkWell(
+                      onTap: () async {
+                        try {
+                          XFile? image = await ImagePicker().pickImage(
+                            source: ImageSource.camera,
+                            imageQuality: 40,
+                          );
+                          if (image != null) {
+                            controller.selectedImage = image;
+                            controller.update();
+                          }
+                        } catch (e) {
+                          print("Error selecting image from camera: $e");
+                        }
+                      },
+                      child: Column(
+                        children: [
+                          if (controller.selectedImage != null) ...[
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(20.0),
+                              child: Image.file(
+                                File(controller.selectedImage!.path),
+                                fit: BoxFit.cover,
+                                width: 200.0,
+                                height: 200.0,
+                              ),
+                            ),
+                          ],
+                          TextFormField(
+                            controller: controller.photoController,
+                            enabled: false,
+                            decoration: const InputDecoration(
+                              labelText: 'Photo',
+                              labelStyle: TextStyle(
+                                color: Colors.blueGrey,
+                              ),
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.blueGrey,
+                                ),
+                              ),
+                              suffixIcon: Icon(Icons.image),
+                            ),
+                            onChanged: (value) {},
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    // // VIEW FOTO
+
                     TextFormField(
                       validator: (value) =>
                           value == '' ? 'Jangan Kosong' : null,
@@ -38,7 +95,6 @@ class TambahKomplenView extends StatelessWidget {
                             color: Colors.blueGrey,
                           ),
                         ),
-                        helperText: "Contoh: AC Rusak!",
                       ),
                       onChanged: (value) {},
                     ),
@@ -57,9 +113,29 @@ class TambahKomplenView extends StatelessWidget {
                             color: Colors.blueGrey,
                           ),
                         ),
-                        helperText: "Contoh: Lorem ipsum dolor si amet.",
                       ),
                       onChanged: (value) {},
+                    ),
+                    DropdownButtonFormField<String>(
+                      value: controller.selectedLocation,
+                      onChanged: (String? newValue) {
+                        controller.selectedLocation = newValue!;
+                        controller.update();
+                      },
+                      items: controller.locationItems
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                      decoration: const InputDecoration(
+                        hintText: "Ruang",
+                        prefixIcon: Padding(
+                          padding: EdgeInsets.all(16.0),
+                          child: Icon(Icons.school),
+                        ),
+                      ),
                     ),
                     const SizedBox(
                       height: 20.0,
@@ -69,7 +145,7 @@ class TambahKomplenView extends StatelessWidget {
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           elevation: 0,
-                          backgroundColor: const Color(0xff0f9565),
+                          backgroundColor: AppColors.primarySwatch,
                           shape: const StadiumBorder(),
                           maximumSize: const Size(double.infinity, 46),
                           minimumSize: const Size(double.infinity, 46),
