@@ -9,102 +9,109 @@ import 'dart:convert';
 class TambahUserController extends GetxController {
   TambahUserView? view;
 
+  @override
+  void onInit() {
+    super.onInit();
+  }
+
+  // KEBUTUHAN DROPDOWN roles, angkatan, prodi
+  String? selectedRoles;
+  String? selectedAngkatan;
+  String? selectedProdi;
+
+  final List<String> rolesItems = ['admin', 'operator', 'mahasiswa'];
+  final List<String> angkatanItems = [
+    '2019',
+    '2020',
+    '2021',
+    '2022',
+    '2023',
+    '2024',
+    '2025'
+  ];
+  final List<String> prodiItems = [
+    'D-4 Teknik Mesin',
+    'D-4 Teknik Listrik',
+    'D-4 Teknik Sipil',
+    'D-4 Transportasi',
+    'D-4 Tata Boga',
+    'D-4 Tata Busana',
+    'D-4 Manajemen Informatika',
+    'D-4 Administrasi Negara',
+    'D-4 Desain Grafis',
+    'D-4 Kepelatihan Olahraga'
+  ];
+
+  void updateSelectedRoles(String? newRoles) {
+    selectedRoles = newRoles;
+    update();
+  }
+
+  void updateSelectedAngkatan(String? newAngkatan) {
+    selectedAngkatan = newAngkatan;
+    update();
+  }
+
+  void updateSelectedProdi(String? newProdi) {
+    selectedProdi = newProdi;
+    update();
+  }
+  // KEBUTUHAN DROPDOWN roles, angkatan, prodi
+
+  // KEBUTUHAN TAMBAH USER
+  final formKey = GlobalKey<FormState>();
+  final controllerName = TextEditingController();
+  final controllerNohp = TextEditingController();
+  final controllerPass = TextEditingController();
+
   Future<void> addUser() async {
     if (formKey.currentState!.validate()) {
-      print("Name: ${controllerName.text}");
-      print("No Hp: ${controllerNohp.text}");
-      print("Email: ${controllerEmail.text}");
-      print("Password: ${controllerPass.text}");
-      print("Role: ${selectedRole.value}");
-      print("Address: ${controllerAddress.text}");
       String? token = await SharedPrefsHelper.getToken();
+
       try {
         var response = await http.post(
           Uri.parse(AppRoutes.addUser),
           headers: {
             'Authorization': 'Bearer $token',
-            'Content-Type':
-                'application/json', // Pastikan ini diperlukan oleh API
+            'Content-Type': 'application/json',
           },
           body: json.encode({
             'name': controllerName.text,
             'nohp': controllerNohp.text,
-            'email': controllerEmail.text,
             'password': controllerPass.text,
-            'role': selectedRole.value,
-            'address': controllerAddress.text,
+            'role': selectedRoles,
+            'mahasiswa_angkatan': selectedAngkatan,
+            'prodi': selectedProdi,
           }),
         );
 
         if (response.statusCode == 200) {
-          // Handle response
           var data = json.decode(response.body);
-          print("Success: ${data['message']}");
-          // Tampilkan pesan sukses
+          update();
+
           Get.snackbar(
-            "Success", // Judul
-            data['message'], // Pesan
-            snackPosition: SnackPosition.BOTTOM, // Posisi Snackbar
-            backgroundColor: Colors.blue, // Warna latar belakang Snackbar
-            colorText: Colors.white, // Warna teks Snackbar
-            duration: const Duration(seconds: 5),
-          );
-        } else {
-          // Handle error
-          print("Error: ${response.body}");
-          // Tampilkan pesan error
-          Get.snackbar(
-            "Error", // Judul
-            "Failed to add user", // Pesan default jika response.body tidak mengandung pesan yang spesifik
-            snackPosition: SnackPosition.BOTTOM, // Posisi Snackbar
-            backgroundColor: Colors.blue, // Warna latar belakang Snackbar
-            colorText: Colors.white, // Warna teks Snackbar
+            "Success",
+            data['message'],
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.blue,
+            colorText: Colors.white,
             duration: const Duration(seconds: 5),
           );
         }
       } finally {
-        // Clear the text fields
         controllerName.clear();
         controllerNohp.clear();
-        controllerEmail.clear();
         controllerPass.clear();
-        controllerAddress.clear();
-        // Optionally, reset the selected role to the default value
-        selectedRole.value = roles[0];
+
+        selectedRoles = null;
+        selectedAngkatan = null;
+        selectedProdi = null;
+
+        update();
       }
     }
   }
+  // KEBUTUHAN TAMBAH USER
 
-  //
-  final controllerName = TextEditingController();
-  final controllerNohp = TextEditingController();
-  final controllerEmail = TextEditingController();
-  final controllerPass = TextEditingController();
-  final controllerRole = TextEditingController();
-  final controllerAddress = TextEditingController();
-
-  final formKey = GlobalKey<FormState>();
-
-  // Daftar peran
-  List<String> roles = ['admin', 'operator', 'mahasiswa'];
-
-  // Variabel untuk menyimpan peran yang dipilih
-  RxString selectedRole = ''.obs;
-
-  @override
-  void onInit() {
-    super.onInit();
-    // Set peran default jika perlu
-    selectedRole.value = roles[0];
-  }
-
-  //
-  // void initState() {
-  //   if (widget.job != null) {
-  //     controllerIdJob.text = widget.job!.idJob!;
-  //     controllerJobName.text = widget.job!.jobName!;
-  //     controllerSalary.text = widget.job!.salary!;
-  //   }
-  //   super.initState();
-  // }
+  // LAST
 }

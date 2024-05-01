@@ -264,7 +264,7 @@ class AccountView extends StatelessWidget {
             heroTag: "profile",
             onPressed: () =>
                 Get.to(() => const UpdateAccount(), preventDuplicates: false),
-            backgroundColor: Colors.red,
+            backgroundColor: AppColors.baseColor,
             child: const Icon(Icons.edit, color: Colors.white),
           ),
         );

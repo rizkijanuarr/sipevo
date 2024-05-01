@@ -70,7 +70,7 @@ class _MeynuState extends State<Meynu> {
                 height: 10.0,
               ),
               Dot(
-                color: AppColors.primarySwatch,
+                color: AppColors.baseColor,
                 strokeWidth: 2.0,
                 dashPattern: const [10.0, 10.0],
                 gap: 2.0,

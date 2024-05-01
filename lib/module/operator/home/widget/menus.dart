@@ -81,7 +81,7 @@ class _MenusState extends State<Menus> {
                 height: 10.0,
               ),
               BorderDotted(
-                color: AppColors.primarySwatch,
+                color: AppColors.baseColor,
                 strokeWidth: 2.0,
                 dashPattern: const [10.0, 10.0],
                 gap: 2.0,

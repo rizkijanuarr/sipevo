@@ -1,11 +1,10 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sipevo/app_routes.dart';
+import 'package:sipevo/core.dart';
 import 'package:sipevo/module/models/user.dart';
 import 'package:sipevo/shared_prefs_helper.dart';
-import '../view/update_user_view.dart';
 import 'package:http/http.dart' as http;
 
 class UpdateUserController extends GetxController {
@@ -13,31 +12,85 @@ class UpdateUserController extends GetxController {
 
   var users = <User>[].obs;
 
+  // KEBUTUHAN TAMBAH USER
+  final controllerId = TextEditingController();
+  final controllerName = TextEditingController();
+  final controllerNohp = TextEditingController();
+  final controllerPass = TextEditingController();
+
+  final formKey = GlobalKey<FormState>();
+
+  // Daftar peran
+  List<String> rolesItems = [
+    'admin',
+    'operator',
+    'mahasiswa',
+  ];
+
+  List<String> angkatanItems = [
+    '2019',
+    '2020',
+    '2021',
+    '2022',
+    '2023',
+    '2024',
+    '2025'
+  ];
+
+  List<String> prodiItems = [
+    'D-4 Teknik Mesin',
+    'D-4 Teknik Listrik',
+    'D-4 Teknik Sipil',
+    'D-4 Transportasi',
+    'D-4 Tata Boga',
+    'D-4 Tata Busana',
+    'D-4 Manajemen Informatika',
+    'D-4 Administrasi Negara',
+    'D-4 Desain Grafis',
+    'D-4 Kepelatihan Olahraga'
+  ];
+
+  // Variabel untuk menyimpan peran yang dipilih
+  RxString selectedRole = ''.obs;
+  RxString selectedAngkatan = ''.obs;
+  RxString selectedProdi = ''.obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    // Menerima objek User dari argumen
+    User user = Get.arguments as User;
+
+    // Mengisi form controller dengan data dari objek User
+    controllerId.text = user.id.toString();
+    controllerName.text = user.name;
+    controllerNohp.text = user.nohp;
+    controllerPass.text = user.pass;
+
+    // Set peran default jika perlu
+    selectedRole.value =
+        rolesItems.contains(user.role) ? user.role : rolesItems[0];
+    selectedAngkatan.value = angkatanItems.contains(user.mahasiswa_angkatan)
+        ? user.mahasiswa_angkatan
+        : angkatanItems[0];
+    selectedProdi.value =
+        prodiItems.contains(user.prodi) ? user.prodi : prodiItems[0];
+  }
+
   Future<void> updateUser() async {
     String? token = await SharedPrefsHelper.getToken();
     if (token == null) {
       Get.snackbar(
-        'Error', // Judul Snackbar
-        'No token found. Please login again.', // Pesan Snackbar
-        snackPosition: SnackPosition.BOTTOM, // Posisi Snackbar
-        backgroundColor: Colors.blue, // Warna latar belakang Snackbar
-        colorText: Colors.white, // Warna teks Snackbar
-        duration: const Duration(seconds: 5), // Durasi tampilan Snackbar
+        'Error',
+        'No token found. Please login again.',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.blue,
+        colorText: Colors.white,
+        duration: const Duration(seconds: 5),
       );
       print('Error: No token found. Please login again.');
       return;
     }
-
-    // Tempatkan kode print di sini untuk memverifikasi data yang akan dikirim
-    print(jsonEncode({
-      'id_user': controllerId.text,
-      'name': controllerName.text.isNotEmpty ? controllerName.text : null,
-      'nohp': controllerNohp.text.isNotEmpty ? controllerNohp.text : null,
-      'email': controllerEmail.text.isNotEmpty ? controllerEmail.text : null,
-      'role': selectedRole.value.isNotEmpty ? selectedRole.value : null,
-      'address':
-          controllerAddress.text.isNotEmpty ? controllerAddress.text : null,
-    }));
 
     final response = await http.post(
       Uri.parse(AppRoutes.updateUser),
@@ -49,9 +102,10 @@ class UpdateUserController extends GetxController {
         'id_user': controllerId.text,
         'name': controllerName.text,
         'nohp': controllerNohp.text,
-        'email': controllerEmail.text,
+        'pass': controllerPass.text,
         'role': selectedRole.value,
-        'address': controllerAddress.text,
+        'mahasiswa_angkatan': selectedAngkatan.value,
+        'prodi': selectedProdi.value,
       }),
     );
 
@@ -59,10 +113,11 @@ class UpdateUserController extends GetxController {
       var data = json.decode(response.body);
       if (data['success']) {
         Get.snackbar(
-          'Success', data['message'],
-          snackPosition: SnackPosition.BOTTOM, // Posisi Snackbar
-          backgroundColor: Colors.blue, // Warna latar belakang Snackbar
-          colorText: Colors.white, // Warna teks Snackbar
+          'Success',
+          data['message'],
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.blue,
+          colorText: Colors.white,
           duration: const Duration(seconds: 5),
         );
 
@@ -70,10 +125,11 @@ class UpdateUserController extends GetxController {
         // Optionally, navigate back or refresh the user list
       } else {
         Get.snackbar(
-          'Error', data['message'],
-          snackPosition: SnackPosition.BOTTOM, // Posisi Snackbar
-          backgroundColor: Colors.blue, // Warna latar belakang Snackbar
-          colorText: Colors.white, // Warna teks Snackbar
+          'Error',
+          data['message'],
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.blue,
+          colorText: Colors.white,
           duration: const Duration(seconds: 5),
         );
         print('Error: ${data['message']}');
@@ -82,9 +138,9 @@ class UpdateUserController extends GetxController {
       Get.snackbar(
         'Error',
         'Failed to update user. Status code: ${response.statusCode}',
-        snackPosition: SnackPosition.BOTTOM, // Posisi Snackbar
-        backgroundColor: Colors.blue, // Warna latar belakang Snackbar
-        colorText: Colors.white, // Warna teks Snackbar
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.blue,
+        colorText: Colors.white,
         duration: const Duration(seconds: 5),
       );
       print(
@@ -92,38 +148,15 @@ class UpdateUserController extends GetxController {
     }
   }
 
-  //
-  final controllerId = TextEditingController();
-  final controllerName = TextEditingController();
-  final controllerNohp = TextEditingController();
-  final controllerEmail = TextEditingController();
-  final controllerRole = TextEditingController();
-  final controllerAddress = TextEditingController();
+  void updateSelectedRole(String newRole) {
+    selectedRole.value = newRole;
+  }
 
-  final formKey = GlobalKey<FormState>();
+  void updateSelectedAngkatan(String newAngkatan) {
+    selectedAngkatan.value = newAngkatan;
+  }
 
-  // Daftar peran
-  List<String> roles = ['admin', 'operator', 'mahasiswa'];
-
-  // Variabel untuk menyimpan peran yang dipilih
-  RxString selectedRole = ''.obs;
-
-  @override
-  void onInit() {
-    super.onInit();
-    // Set peran default jika perlu
-    selectedRole.value = roles[0];
-
-    // Menerima objek User dari argumen
-    User user = Get.arguments as User;
-
-    // Mengisi form controller dengan data dari objek User
-    controllerId.text = user.id.toString();
-    controllerName.text = user.name;
-    controllerNohp.text = user.nohp;
-    selectedRole.value = user.role;
-
-    // Set peran default jika perlu
-    selectedRole.value = roles.contains(user.role) ? user.role : roles[0];
+  void updateSelectedProdi(String newProdi) {
+    selectedProdi.value = newProdi;
   }
 }

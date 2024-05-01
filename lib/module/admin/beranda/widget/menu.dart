@@ -71,7 +71,7 @@ class _ExpandableContainerState extends State<ExpandableContainer> {
                 height: 10.0,
               ),
               DottedBorder(
-                color: Colors.green,
+                color: AppColors.baseColor,
                 strokeWidth: 2.0,
                 dashPattern: const [10.0, 10.0],
                 gap: 2.0,

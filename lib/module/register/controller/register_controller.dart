@@ -120,6 +120,7 @@ class RegisterController extends GetxController {
     controllerName.clear();
     controllerNohp.clear();
     controllerPass.clear();
+
     selectedAngkatan = null;
     selectedProdi = null;
   }

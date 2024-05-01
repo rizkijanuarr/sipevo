@@ -20,7 +20,6 @@ class LogsController extends GetxController {
   // REFRESH KONTEN
   void refreshLogs() async {
     fetchLogs();
-    update();
 
     Get.snackbar(
       'Refreshed',
@@ -33,6 +32,7 @@ class LogsController extends GetxController {
   }
 
   // HALAMAN LOGS
+  int total_logs = 0;
   var logs = <Log>[].obs;
 
   void fetchLogs() async {
@@ -48,6 +48,8 @@ class LogsController extends GetxController {
       var jsonData = jsonDecode(response.body);
       var logsJson = jsonData['logs'] as List;
       logs.value = logsJson.map((logJson) => Log.fromJson(logJson)).toList();
+      total_logs = jsonData['total_logs'];
+      update();
     }
   }
 }

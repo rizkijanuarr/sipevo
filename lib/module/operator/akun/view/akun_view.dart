@@ -215,7 +215,7 @@ class AkunView extends StatelessWidget {
                                       controller.users.isNotEmpty
                                           ? controller
                                               .users[0].mahasiswa_angkatan
-                                          : '',
+                                          : 'Operator',
                                       style: TextStyle(
                                         fontSize: 12.0,
                                         fontWeight: FontWeight.bold,
@@ -240,7 +240,7 @@ class AkunView extends StatelessWidget {
                                 Obx(() => Text(
                                       controller.users.isNotEmpty
                                           ? controller.users[0].prodi
-                                          : '',
+                                          : 'Operator',
                                       style: TextStyle(
                                         fontSize: 12.0,
                                         fontWeight: FontWeight.bold,
@@ -264,7 +264,7 @@ class AkunView extends StatelessWidget {
             heroTag: "profile_operator",
             onPressed: () =>
                 Get.to(() => const UpdateAkun(), preventDuplicates: false),
-            backgroundColor: Colors.red,
+            backgroundColor: AppColors.baseColor,
             child: const Icon(Icons.edit, color: Colors.white),
           ),
         );

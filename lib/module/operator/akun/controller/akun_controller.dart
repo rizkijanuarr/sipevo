@@ -38,7 +38,6 @@ class AkunController extends GetxController {
   // REFRESH KONTEN
   void refreshProfile() async {
     fetchUserProfile();
-    update();
 
     Get.snackbar(
       'Refreshed',
@@ -59,32 +58,24 @@ class AkunController extends GetxController {
     var url = Uri.parse(AppRoutes.profile);
     print("Fetching user profile from URL: $url");
 
-    try {
-      final response = await http.get(
-        url,
-        headers: {
-          'Authorization': 'Bearer $token',
-          'Content-Type': 'application/json',
-        },
-      );
+    final response = await http.get(
+      url,
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json',
+      },
+    );
 
-      print("Status Code: ${response.statusCode}");
-      print("Response Body: ${response.body}");
+    print("Status Code: ${response.statusCode}");
+    print("Response Body: ${response.body}");
 
-      if (response.statusCode == 200) {
-        var data = json.decode(response.body);
-        if (data['success'] != null && data['success']) {
-          var userData = data['data'];
-          users.assignAll([User.fromJson(userData)]);
-          update();
-        } else {
-          print("Error: Success is false in response");
-        }
-      } else {
-        print("Error: Unexpected status code ${response.statusCode}");
+    if (response.statusCode == 200) {
+      var data = json.decode(response.body);
+      if (data['success'] != null && data['success']) {
+        var userData = data['data'];
+        users.assignAll([User.fromJson(userData)]);
+        update();
       }
-    } catch (error) {
-      print("Error: $error");
     }
   }
 

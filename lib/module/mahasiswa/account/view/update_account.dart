@@ -87,7 +87,7 @@ class UpdateAccount extends StatelessWidget {
                       controller: controller.nameController,
                       keyboardType: TextInputType.text,
                       textInputAction: TextInputAction.next,
-                      cursorColor: AppColors.primarySwatch,
+                      cursorColor: AppColors.baseColor,
                       decoration: const InputDecoration(
                         labelText: 'Name',
                         labelStyle: TextStyle(
@@ -107,7 +107,7 @@ class UpdateAccount extends StatelessWidget {
                       controller: controller.nohpController,
                       keyboardType: TextInputType.number,
                       textInputAction: TextInputAction.next,
-                      cursorColor: AppColors.primarySwatch,
+                      cursorColor: AppColors.baseColor,
                       decoration: const InputDecoration(
                         labelText: 'No HP',
                         labelStyle: TextStyle(
@@ -129,7 +129,7 @@ class UpdateAccount extends StatelessWidget {
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           elevation: 0,
-                          backgroundColor: AppColors.primarySwatch,
+                          backgroundColor: AppColors.baseColor,
                           shape: const StadiumBorder(),
                           maximumSize: const Size(double.infinity, 46),
                           minimumSize: const Size(double.infinity, 46),

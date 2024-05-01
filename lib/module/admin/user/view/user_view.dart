@@ -16,7 +16,7 @@ class UserView extends StatelessWidget {
 
         return Scaffold(
           appBar: AppBar(
-            title: const Text("List User"),
+            title: Text("List Users (${controller.total_users})"),
             actions: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -27,59 +27,64 @@ class UserView extends StatelessWidget {
               ),
             ],
           ),
-          body: SingleChildScrollView(
-            child: Container(
-              padding: const EdgeInsets.all(10.0),
-              child: Column(
-                children: [
-                  if (controller.users.isNotEmpty)
-                    ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: controller.users.length,
-                      itemBuilder: (context, index) {
-                        var user = controller.users[index];
-                        return ListTile(
+          body: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: ListView.builder(
+              itemCount: controller.users.length,
+              itemBuilder: (context, index) {
+                var user = controller.users[index];
+                return InkWell(
+                  onTap: () async {
+                    // Aksi yang akan diambil saat card ditekan
+                    String? result = await controller.showOption(user);
+                    if (result == 'update') {
+                      // update
+                    } else if (result == 'delete') {
+                      // del
+                    } else {
+                      // close
+                    }
+                    return;
+                  },
+                  child: Card(
+                    elevation: 1,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Column(
+                      children: [
+                        ListTile(
+                          contentPadding: EdgeInsets.all(10),
                           leading: CircleAvatar(
-                            backgroundColor:
-                                const Color(0xff0f9565).withOpacity(0.8),
-                            child: Text(
-                              '${index + 1}',
-                              style: const TextStyle(
-                                color: Colors.white,
-                              ),
-                            ),
+                            backgroundImage: NetworkImage(
+                                'https://sipevo.my.id/public/uploads/users/${user.photo}'),
                           ),
                           title: Text(
                             user.name,
-                            style: const TextStyle(
-                              color: Colors.black,
-                            ),
+                            style: TextStyle(fontWeight: FontWeight.bold),
                           ),
-                          subtitle: Text(user.role),
-                          trailing: IconButton(
-                            onPressed: () => controller.showOption(user),
-                            icon: const Icon(Icons.more_vert),
+                          subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                '${user.role.substring(0, 1).toUpperCase()}${user.role.substring(1)} - ${user.nohp}',
+                              ),
+                              Text(
+                                user.prodi != null ? user.prodi : '-',
+                              ),
+                            ],
                           ),
-                        );
-                      },
-                    ),
-                  if (controller.users.isEmpty)
-                    const Center(
-                      child: Text(
-                        'Data Kosong',
-                        style: TextStyle(
-                          fontSize: 20,
                         ),
-                        textAlign: TextAlign.center,
-                      ),
+                      ],
                     ),
-                ],
-              ),
+                  ),
+                );
+              },
             ),
           ),
           floatingActionButton: FloatingActionButton(
             onPressed: () => Get.to(const TambahUserView()),
-            backgroundColor: Colors.red,
+            backgroundColor: AppColors.baseColor,
             child: const Icon(Icons.add, color: Colors.white),
           ),
           floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,

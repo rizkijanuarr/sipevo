@@ -102,17 +102,16 @@ class KomplainController extends GetxController {
               textCancel: "Cancel",
               confirmTextColor: Colors.white,
               onConfirm: () {
-                Get.back(result: true); // Pastikan untuk mengembalikan true
+                Get.back(result: true);
               },
               onCancel: () {
-                Get.back(result: false); // Pastikan untuk mengembalikan false
+                Get.back(result: false);
               });
-          print("Confirm Delete: $confirmDelete"); // Debug log
+          print("Confirm Delete: $confirmDelete");
           if (confirmDelete == true) {
-            print(
-                "Deleting complaint with ID: ${complaint.idComplaint}"); // Debug log
+            print("Deleting complaint with ID: ${complaint.idComplaint}");
             deleteComplaint(complaint.idComplaint);
-            fetchComplaints(); // Panggil fetchComplaints setelah penghapusan
+            fetchComplaints();
           }
         }
         break;
@@ -151,29 +150,9 @@ class KomplainController extends GetxController {
           duration: const Duration(seconds: 5),
         );
         fetchComplaints();
-      } else {
-        print('Failed to delete complaint');
-        Get.snackbar(
-          'Error',
-          'Failed to delete complaint',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.blue,
-          colorText: Colors.white,
-          duration: const Duration(seconds: 5),
-        );
       }
-    } else {
-      // Handle error
-      print(
-          'Failed to delete complaint with status code: ${response.statusCode}');
-      Get.snackbar(
-        'Error',
-        'Failed to delete complaint. Status code: ${response.statusCode}',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.blue,
-        colorText: Colors.white,
-        duration: const Duration(seconds: 5),
-      );
     }
   }
+
+  // LAST
 }

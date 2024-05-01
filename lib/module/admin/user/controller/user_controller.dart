@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 class UserController extends GetxController {
   UserView? view;
 
+  int total_users = 0;
   var users = <User>[].obs;
 
   @override
@@ -16,56 +17,43 @@ class UserController extends GetxController {
     fetchUsers();
   }
 
-  /// untuk memperbarui tampilan
-  /// / Tambahkan metode ini dalam UserController
   void refreshUsers() async {
-    fetchUsers(); // Memuat ulang data pengguna dari server
-    update(); // Memperbarui UI
+    fetchUsers();
 
-    // Menampilkan Snackbar
     Get.snackbar(
-      'Refreshed', // Judul Snackbar
-      'Data telah diperbarui🚀', // Pesan Snackbar
-      snackPosition: SnackPosition.BOTTOM, // Posisi Snackbar
-      backgroundColor: Colors.blue, // Warna latar belakang Snackbar
-      colorText: Colors.white, // Warna teks Snackbar
-      duration: const Duration(seconds: 5), // Durasi tampilan Snackbar
+      'Refreshed',
+      'Data telah diperbarui🚀',
+      snackPosition: SnackPosition.BOTTOM,
+      backgroundColor: Colors.blue,
+      colorText: Colors.white,
+      duration: const Duration(seconds: 5),
     );
   }
 
   void fetchUsers() async {
-    try {
-      String? token = await SharedPrefsHelper.getToken();
-      final response = await http.get(
-        Uri.parse(AppRoutes.getUser),
-        headers: {
-          'Authorization': 'Bearer $token',
-          'Content-Type':
-              'application/json', // Pastikan ini diperlukan oleh API
-        },
-      );
+    String? token = await SharedPrefsHelper.getToken();
+    final response = await http.get(
+      Uri.parse(AppRoutes.getUser),
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json',
+      },
+    );
 
-      if (response.statusCode == 200) {
-        var data = json.decode(response.body);
-        if (data['success']) {
-          var usersJson = data['users'] as List;
-          users.value =
-              usersJson.map((userJson) => User.fromJson(userJson)).toList();
-          print("Fetched users: $users");
-        } else {
-          print("Error from API: ${data['message']}");
-        }
-      } else {
-        print("Error fetching users: ${response.statusCode}");
-        print("Response body: ${response.body}");
+    if (response.statusCode == 200) {
+      var data = json.decode(response.body);
+      if (data['success']) {
+        users.value = (data['users'] as List)
+            .map((userJson) => User.fromJson(userJson))
+            .toList();
+        total_users = data['total_users'];
+        update();
+        print("Fetched users: $users");
       }
-    } catch (e) {
-      print("Exception caught: $e");
     }
   }
 
-  // Fungsi untuk menampilkan opsi
-  void showOption(user) async {
+  Future<String?> showOption(user) async {
     var result = await Get.dialog(
       SimpleDialog(
         children: [
@@ -86,80 +74,75 @@ class UserController extends GetxController {
       barrierDismissible: false,
     );
 
-    // Tindakan berdasarkan hasil dari dialog
     switch (result) {
       case 'update':
         Get.to(() => const UpdateUserView(), arguments: user)
             ?.then((value) => refreshUsers());
         break;
       case 'delete':
-        delete(user);
+        if (user != null) {
+          bool? confirmDelete = await Get.defaultDialog<bool>(
+            title: "Are you sure?",
+            content: Text("You won't be able to revert this!"),
+            textConfirm: "Yes, delete it!",
+            textCancel: "Cancel",
+            confirmTextColor: Colors.white,
+            onConfirm: () {
+              Get.back(result: true);
+            },
+            onCancel: () {
+              Get.back(result: false);
+            },
+          );
+          print("Confirm Delete: $confirmDelete");
+          if (confirmDelete == true) {
+            await delete(user);
+          }
+        }
         break;
     }
   }
 
-  // Fungsi untuk menghapus pengguna
-  void delete(User user) async {
-    try {
-      String? token = await SharedPrefsHelper.getToken();
-      final response = await http.post(
-        Uri.parse(AppRoutes.deleteUser),
-        headers: {
-          'Authorization': 'Bearer $token',
-          'Content-Type': 'application/json',
-        },
-        body: json.encode({
-          'id_user':
-              user.id, // Asumsikan setiap pengguna memiliki 'id' yang unik
-        }),
-      );
+  Future<void> delete(User user) async {
+    String? token = await SharedPrefsHelper.getToken();
 
-      print(
-          "Delete response: ${response.body}"); // Tambahkan baris ini untuk mencetak respons
+    final response = await http.post(
+      Uri.parse(AppRoutes.deleteUser),
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json',
+      },
+      body: json.encode({
+        'id_user': user.id,
+      }),
+    );
 
-      if (response.statusCode == 200) {
-        var data = json.decode(response.body);
-        if (data['success']) {
-          users.remove(
-              user); // Hapus pengguna dari daftar lokal jika penghapusan di server berhasil
-          update(); // Perbarui tampilan setelah penghapusan
-          Get.snackbar(
-            'Success', // Judul snackbar
-            'User deleted successfully', // Pesan snackbar
-            snackPosition: SnackPosition.BOTTOM, // Posisi Snackbar
-            backgroundColor: Colors.blue, // Warna latar belakang Snackbar
-            colorText: Colors.white, // Warna teks Snackbar
-            duration: const Duration(seconds: 5), // Durasi tampilan Snackbar
-          );
-        } else {
-          Get.snackbar(
-            'Error', // Judul snackbar
-            'Error from API: ${data['message']}', // Pesan snackbar
-            snackPosition: SnackPosition.BOTTOM, // Posisi Snackbar
-            backgroundColor: Colors.blue, // Warna latar belakang Snackbar
-            colorText: Colors.white, // Warna teks Snackbar
-            duration: const Duration(seconds: 5), // Durasi tampilan Snackbar
-          );
-        }
-      } else {
+    if (response.statusCode == 200) {
+      var data = json.decode(response.body);
+      if (data['success']) {
+        users.remove(user);
+        update();
+
         Get.snackbar(
-          'Error', // Judul snackbar
-          'Error deleting user: ${response.statusCode}', // Pesan snackbar
-          snackPosition: SnackPosition.BOTTOM, // Posisi Snackbar
-          backgroundColor: Colors.blue, // Warna latar belakang Snackbar
-          colorText: Colors.white, // Warna teks Snackbar
-          duration: const Duration(seconds: 5), // Durasi tampilan Snackbar
+          'Success',
+          'User deleted successfully',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.blue,
+          colorText: Colors.white,
+          duration: const Duration(seconds: 5),
         );
       }
-    } catch (e) {
+    } else {
       Get.snackbar(
-        'Error', // Judul snackbar
-        'Exception caught: $e', // Pesan snackbar
-        snackPosition: SnackPosition.BOTTOM, // Posisi Snackbar
-        backgroundColor: Colors.blue, // Warna latar belakang Snackbar
-        colorText: Colors.white, // Warna teks Snackbar
-        duration: const Duration(seconds: 5), // Durasi tampilan Snackbar
+        'Error',
+        'Failed to delete user',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+        duration: const Duration(seconds: 5),
       );
     }
   }
+
+  // LAST
 }

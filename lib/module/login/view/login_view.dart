@@ -17,12 +17,12 @@ class LoginView extends StatelessWidget {
 
         return Theme(
           data: ThemeData(
-            primaryColor: AppColors.primarySwatch,
+            primaryColor: AppColors.baseColor,
             scaffoldBackgroundColor: Colors.white,
             elevatedButtonTheme: ElevatedButtonThemeData(
               style: ElevatedButton.styleFrom(
                 elevation: 0,
-                backgroundColor: AppColors.primarySwatch,
+                backgroundColor: AppColors.baseColor,
                 shape: const StadiumBorder(),
                 maximumSize: const Size(double.infinity, 56),
                 minimumSize: const Size(double.infinity, 56),
@@ -30,9 +30,9 @@ class LoginView extends StatelessWidget {
             ),
             inputDecorationTheme: InputDecorationTheme(
               filled: true,
-              fillColor: AppColors.primarySwatch[50],
-              iconColor: AppColors.primarySwatch,
-              prefixIconColor: AppColors.primarySwatch,
+              fillColor: Colors.grey[100],
+              iconColor: AppColors.baseColor,
+              prefixIconColor: AppColors.baseColor,
               contentPadding:
                   const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
               border: const OutlineInputBorder(
@@ -81,7 +81,7 @@ class LoginView extends StatelessWidget {
                                         controller: controller.controllerNohp,
                                         keyboardType: TextInputType.number,
                                         textInputAction: TextInputAction.next,
-                                        cursorColor: AppColors.primarySwatch,
+                                        cursorColor: AppColors.baseColor,
                                         onSaved: (phone) {},
                                         decoration: const InputDecoration(
                                           hintText: "Your phone",
@@ -102,24 +102,28 @@ class LoginView extends StatelessWidget {
                                               controller.controllerPassword,
                                           textInputAction: TextInputAction.done,
                                           obscureText: !controller.showPassword,
-                                          cursorColor: AppColors.primarySwatch,
+                                          cursorColor: AppColors.baseColor,
                                           decoration: InputDecoration(
                                             hintText: "Your password",
                                             prefixIcon: const Padding(
                                               padding: EdgeInsets.all(16.0),
                                               child: Icon(Icons.lock),
                                             ),
-                                            suffixIcon: IconButton(
-                                              icon: Icon(
-                                                controller.showPassword
-                                                    ? Icons.visibility
-                                                    : Icons.visibility_off,
-                                                color: AppColors.primarySwatch,
+                                            suffixIcon: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: IconButton(
+                                                icon: Icon(
+                                                  controller.showPassword
+                                                      ? Icons.visibility
+                                                      : Icons.visibility_off,
+                                                  color: Colors.grey,
+                                                ),
+                                                onPressed: () {
+                                                  controller
+                                                      .togglePasswordVisibility();
+                                                },
                                               ),
-                                              onPressed: () {
-                                                controller
-                                                    .togglePasswordVisibility();
-                                              },
                                             ),
                                           ),
                                         ),
@@ -165,7 +169,7 @@ class LoginView extends StatelessWidget {
                                             child: const Text(
                                               "Sign Up",
                                               style: TextStyle(
-                                                color: AppColors.primarySwatch,
+                                                color: AppColors.baseColor,
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),

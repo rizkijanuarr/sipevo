@@ -52,7 +52,7 @@ class UpdateKomplainView extends StatelessWidget {
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     elevation: 0,
-                    backgroundColor: AppColors.primarySwatch,
+                    backgroundColor: AppColors.baseColor,
                     shape: const StadiumBorder(),
                     maximumSize: const Size(double.infinity, 46),
                     minimumSize: const Size(double.infinity, 46),

@@ -79,14 +79,14 @@ class NavbaropView extends StatelessWidget {
                               Icon(
                                 menu["icon"] as IconData,
                                 color: index == controller.selectedIndex
-                                    ? AppColors.primarySwatch
+                                    ? AppColors.baseColor
                                     : Colors.grey,
                               ),
                               if (index == controller.selectedIndex)
                                 Text(
                                   menu["label"] as String,
                                   style: const TextStyle(
-                                      color: AppColors.primarySwatch),
+                                      color: AppColors.baseColor),
                                 ),
                             ],
                           ),

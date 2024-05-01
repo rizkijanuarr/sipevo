@@ -87,7 +87,7 @@ class TambahKomplen extends StatelessWidget {
                       controller: controller.subjectController,
                       keyboardType: TextInputType.text,
                       textInputAction: TextInputAction.next,
-                      cursorColor: AppColors.primarySwatch,
+                      cursorColor: AppColors.baseColor,
                       decoration: const InputDecoration(
                         labelText: 'Subject',
                         labelStyle: TextStyle(
@@ -107,7 +107,7 @@ class TambahKomplen extends StatelessWidget {
                       controller: controller.descriptionController,
                       keyboardType: TextInputType.text,
                       textInputAction: TextInputAction.next,
-                      cursorColor: AppColors.primarySwatch,
+                      cursorColor: AppColors.baseColor,
                       decoration: const InputDecoration(
                         labelText: 'Description',
                         labelStyle: TextStyle(
@@ -150,7 +150,7 @@ class TambahKomplen extends StatelessWidget {
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           elevation: 0,
-                          backgroundColor: AppColors.primarySwatch,
+                          backgroundColor: AppColors.baseColor,
                           shape: const StadiumBorder(),
                           maximumSize: const Size(double.infinity, 46),
                           minimumSize: const Size(double.infinity, 46),

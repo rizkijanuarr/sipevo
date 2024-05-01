@@ -37,7 +37,7 @@ class DashboardView extends StatelessWidget {
                               child: Container(
                                 width: MediaQuery.of(context).size.width,
                                 decoration: const BoxDecoration(
-                                  color: AppColors.primarySwatch,
+                                  color: AppColors.baseColor,
                                 ),
                               ),
                             ),
@@ -121,7 +121,7 @@ class DashboardView extends StatelessWidget {
                             "See all",
                             style: TextStyle(
                               fontSize: 14.0,
-                              color: AppColors.primarySwatch,
+                              color: AppColors.baseColor,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -195,9 +195,8 @@ class DashboardView extends StatelessWidget {
                                     shape: BoxShape.circle,
                                     color: (Theme.of(context).brightness ==
                                                 Brightness.dark
-                                            ? AppColors.primarySwatch
-                                            : AppColors.primarySwatch
-                                                .withOpacity(
+                                            ? AppColors.baseColor
+                                            : AppColors.baseColor.withOpacity(
                                                 0.6,
                                               ))
                                         .withOpacity(

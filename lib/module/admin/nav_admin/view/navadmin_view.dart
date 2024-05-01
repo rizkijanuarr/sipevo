@@ -67,10 +67,8 @@ class NavAdmin extends StatelessWidget {
                   ],
                 ),
                 child: BottomAppBar(
-                  elevation:
-                      0, // Tetapkan elevation menjadi 0 untuk menghindari shadow bawaan
-                  color: Colors
-                      .transparent, // Setel warna menjadi transparan untuk menghindari double shadow
+                  elevation: 0,
+                  color: Colors.transparent,
                   child: SizedBox(
                     height: 60,
                     child: Row(
@@ -85,14 +83,14 @@ class NavAdmin extends StatelessWidget {
                               Icon(
                                 menu["icon"] as IconData,
                                 color: index == controller.selectedIndex
-                                    ? const Color(0xff0f9565)
+                                    ? AppColors.baseColor
                                     : Colors.grey,
                               ),
                               if (index == controller.selectedIndex)
                                 Text(
                                   menu["label"] as String,
                                   style: const TextStyle(
-                                    color: Color(0xff0f9565),
+                                    color: AppColors.baseColor,
                                   ),
                                 ),
                             ],

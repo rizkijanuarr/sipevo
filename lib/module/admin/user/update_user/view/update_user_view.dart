@@ -4,7 +4,7 @@ import 'package:sipevo/core.dart';
 import 'package:get/get.dart';
 
 class UpdateUserView extends StatelessWidget {
-  const UpdateUserView({super.key});
+  const UpdateUserView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +27,9 @@ class UpdateUserView extends StatelessWidget {
                   decoration: const InputDecoration(labelText: 'ID'),
                   enabled: false, // ID tidak perlu diubah
                 ),
+                const SizedBox(
+                  height: 20.0,
+                ),
                 TextFormField(
                   controller: controller.controllerName,
                   decoration: const InputDecoration(labelText: 'Name'),
@@ -37,21 +40,29 @@ class UpdateUserView extends StatelessWidget {
                     return null;
                   },
                 ),
+                const SizedBox(
+                  height: 20.0,
+                ),
                 TextFormField(
                   controller: controller.controllerNohp,
                   decoration: const InputDecoration(labelText: 'No HP'),
                 ),
-                TextFormField(
-                  controller: controller.controllerEmail,
-                  decoration: const InputDecoration(labelText: 'Email'),
+                const SizedBox(
+                  height: 20.0,
                 ),
-                // Password field bisa ditambahkan jika diperlukan
+                TextFormField(
+                  controller: controller.controllerPass,
+                  decoration: const InputDecoration(labelText: 'Pass'),
+                ),
+                const SizedBox(
+                  height: 20.0,
+                ),
                 Obx(() => DropdownButtonFormField<String>(
                       value: controller.selectedRole.value,
                       onChanged: (newValue) {
                         controller.selectedRole.value = newValue!;
                       },
-                      items: controller.roles
+                      items: controller.rolesItems
                           .map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
@@ -60,19 +71,49 @@ class UpdateUserView extends StatelessWidget {
                       }).toList(),
                       decoration: const InputDecoration(labelText: 'Role'),
                     )),
-                TextFormField(
-                  controller: controller.controllerAddress,
-                  decoration: const InputDecoration(labelText: 'Address'),
+                const SizedBox(
+                  height: 20.0,
                 ),
+                Obx(() => DropdownButtonFormField<String>(
+                      value: controller.selectedAngkatan.value,
+                      onChanged: (newValue) {
+                        controller.selectedAngkatan.value = newValue!;
+                      },
+                      items: controller.angkatanItems
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                      decoration: const InputDecoration(labelText: 'Angkatan'),
+                    )),
+                const SizedBox(
+                  height: 20.0,
+                ),
+                Obx(() => DropdownButtonFormField<String>(
+                      value: controller.selectedProdi.value,
+                      onChanged: (newValue) {
+                        controller.selectedProdi.value = newValue!;
+                      },
+                      items: controller.prodiItems
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                      decoration: const InputDecoration(labelText: 'Prodi'),
+                    )),
                 const SizedBox(
                   height: 20.0,
                 ),
                 Hero(
-                  tag: "login_btn",
+                  tag: "update_user",
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       elevation: 0,
-                      backgroundColor: const Color(0xff0f9565),
+                      backgroundColor: AppColors.baseColor,
                       shape: const StadiumBorder(),
                       maximumSize: const Size(double.infinity, 46),
                       minimumSize: const Size(double.infinity, 46),

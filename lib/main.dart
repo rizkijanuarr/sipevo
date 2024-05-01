@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sipevo/core.dart';
+import 'package:sipevo/module/splash.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,12 +36,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      debugShowCheckedModeBanner: true,
       theme: ThemeData(
         useMaterial3: true,
         scaffoldBackgroundColor: Colors.grey[300],
         appBarTheme: const AppBarTheme(
-          backgroundColor: AppColors.primarySwatch,
+          backgroundColor: AppColors.baseColor,
           titleTextStyle: TextStyle(
             color: Colors.white,
             fontSize: 20,
@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
           elevation: 0,
         ),
       ),
-      home: startingWidget,
+      home: SplashPage(),
     );
   }
 }

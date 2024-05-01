@@ -184,7 +184,7 @@ class KomplenView extends StatelessWidget {
           floatingActionButton: FloatingActionButton(
             heroTag: "tambah_komplen",
             onPressed: () => Get.to(() => const TambahKomplen()),
-            backgroundColor: Colors.red,
+            backgroundColor: AppColors.baseColor,
             child: const Icon(Icons.add, color: Colors.white),
           ),
           floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,

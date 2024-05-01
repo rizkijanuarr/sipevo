@@ -2,6 +2,7 @@ class User {
   final int? id;
   final String name;
   final String nohp;
+  final String pass;
   final String role;
   final String photo;
   final String mahasiswa_angkatan;
@@ -11,6 +12,7 @@ class User {
     this.id,
     required this.name,
     required this.nohp,
+    required this.pass,
     required this.role,
     required this.photo,
     required this.mahasiswa_angkatan,
@@ -27,6 +29,7 @@ class User {
           : null,
       name: json['name'] ?? '',
       nohp: json['nohp'] ?? '',
+      pass: json['pass'] ?? '',
       role: json['role'] ?? '',
       photo: json['photo'] ?? '',
       mahasiswa_angkatan: json['mahasiswa_angkatan'] ?? '',
@@ -36,6 +39,6 @@ class User {
 
   @override
   String toString() {
-    return 'User{id: $id, name: $name, nohp: $nohp,  role: $role, photo: $photo, mahasiswa_angkatan: $mahasiswa_angkatan, prodi: $prodi}';
+    return 'User{id: $id, name: $name, nohp: $nohp, pass: $pass,  role: $role, photo: $photo, mahasiswa_angkatan: $mahasiswa_angkatan, prodi: $prodi}';
   }
 }
