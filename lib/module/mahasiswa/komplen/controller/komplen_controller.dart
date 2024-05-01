@@ -31,7 +31,6 @@ class KomplenController extends GetxController {
   // REFRESH KONTEN
   void refreshComplaints() async {
     fetchComplaints();
-    update();
 
     Get.snackbar(
       'Refreshed',
@@ -44,7 +43,9 @@ class KomplenController extends GetxController {
   }
 
   // LIST KOMPLEN => HALAMAN KOMPLEN VIEW
+  int total_complaints = 0;
   var complaints = <Complaints>[].obs;
+
   String basePhotoComplaints =
       "https://sipevo.my.id/public/uploads/complaints/";
 
@@ -69,16 +70,14 @@ class KomplenController extends GetxController {
       if (data['success']) {
         var complaintsJson = data['complaints'] as List;
         complaints.value = complaintsJson.map((complaintJson) {
-          // Decode the photo_complaints URL before passing it to the model
           var decodedPhotoUrl =
               Uri.decodeFull(complaintJson['photo_complaints'] ?? '');
-          complaintJson['photo_complaints'] =
-              decodedPhotoUrl; // Update the JSON with the decoded URL
+          complaintJson['photo_complaints'] = decodedPhotoUrl;
           return Complaints.fromJson(complaintJson);
         }).toList();
+        total_complaints = data['total_results'];
+        update();
       }
-    } else {
-      print('Failed to load complaints');
     }
   }
 

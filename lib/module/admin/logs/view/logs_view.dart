@@ -24,16 +24,18 @@ class LogsView extends StatelessWidget {
               ),
             ],
           ),
-          body: Obx(() => ListView.builder(
-                itemCount: controller.logs.length,
-                itemBuilder: (context, index) {
-                  final log = controller.logs[index];
-                  return ListTile(
-                    title: Text(log.logDescription),
-                    subtitle: Text("${log.name} - ${log.timestamp}"),
-                  );
-                },
-              )),
+          body: Obx(
+            () => ListView.builder(
+              itemCount: controller.logs.length,
+              itemBuilder: (context, index) {
+                final log = controller.logs[index];
+                return ListTile(
+                  title: Text(log.logDescription),
+                  subtitle: Text("${log.name} - ${log.timestamp}"),
+                );
+              },
+            ),
+          ),
         );
       },
     );

@@ -16,12 +16,23 @@ class _MenusState extends State<Menus> {
   bool isExpanded = false;
 
   final List<Map<String, dynamic>> iconLabels = [
-    {'icon': Icons.work_outline_outlined, 'label': 'Complaints'},
-    {'icon': Icons.person_outline, 'label': 'Profile'},
+    {
+      'icon': Icons.work_outline_outlined,
+      'label': 'Complaints',
+    },
+    {
+      "icon": Icons.history,
+      "label": "List Logs",
+    },
+    {
+      'icon': Icons.person_outline,
+      'label': 'Profile',
+    },
   ];
 
   final List<Widget> pages = [
     const KomplainView(),
+    const LogsSystemView(),
     const AkunView(),
   ];
 
@@ -70,7 +81,7 @@ class _MenusState extends State<Menus> {
                 height: 10.0,
               ),
               BorderDotted(
-                color: Colors.green,
+                color: AppColors.primarySwatch,
                 strokeWidth: 2.0,
                 dashPattern: const [10.0, 10.0],
                 gap: 2.0,
@@ -88,15 +99,13 @@ class _MenusState extends State<Menus> {
                   });
                 },
                 child: Column(
-                  crossAxisAlignment:
-                      CrossAxisAlignment.stretch, // Expanded ke bawah
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: iconLabels
                           .map((item) => GestureDetector(
                                 onTap: () {
-                                  // Menavigasi ke halaman tertentu saat ikon diklik
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(

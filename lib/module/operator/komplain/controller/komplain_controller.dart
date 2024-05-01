@@ -12,22 +12,22 @@ import 'package:http/http.dart' as http;
 class KomplainController extends GetxController {
   KomplainView? view;
 
-  var complaints = <Complaints>[].obs; // Gunakan tipe data Complaint
+  int total_complaints = 0;
+  var complaints = <Complaints>[].obs;
 
-  /// untuk memperbarui tampilan
-  /// / Tambahkan metode ini dalam UserController
+  String basePhotoComplaints =
+      "https://sipevo.my.id/public/uploads/complaints/";
+
   void refreshComplaints() async {
-    fetchComplaints(); // Memuat ulang data pengguna dari server
-    update(); // Memperbarui UI
+    fetchComplaints();
 
-    // Menampilkan Snackbar
     Get.snackbar(
-      'Refreshed', // Judul Snackbar
-      'Data telah diperbarui🚀', // Pesan Snackbar
-      snackPosition: SnackPosition.BOTTOM, // Posisi Snackbar
-      backgroundColor: Colors.blue, // Warna latar belakang Snackbar
-      colorText: Colors.white, // Warna teks Snackbar
-      duration: const Duration(seconds: 5), // Durasi tampilan Snackbar
+      'Refreshed',
+      'Data telah diperbarui🚀',
+      snackPosition: SnackPosition.BOTTOM,
+      backgroundColor: Colors.blue,
+      colorText: Colors.white,
+      duration: const Duration(seconds: 5),
     );
   }
 
@@ -39,13 +39,18 @@ class KomplainController extends GetxController {
 
   void fetchComplaints() async {
     String? token = await SharedPrefsHelper.getToken();
+    var url = Uri.parse(AppRoutes.getComplaints);
     var response = await http.get(
-      Uri.parse(AppRoutes.getComplaints),
+      url,
       headers: {
         'Authorization': 'Bearer $token',
         'Content-Type': 'application/json',
       },
     );
+
+    print('Response body: ${response.body}');
+    print('Status code: ${response.statusCode}');
+    print('URL: ${url.toString()}');
 
     if (response.statusCode == 200) {
       var data = json.decode(response.body);
@@ -54,15 +59,13 @@ class KomplainController extends GetxController {
         complaints.value = complaintsJson
             .map((complaintJson) => Complaints.fromJson(complaintJson))
             .toList();
+        total_complaints = data['total_results'];
+        update();
       }
-    } else {
-      // Handle error
-      print('Failed to load complaints');
     }
   }
 
-  // Fungsi untuk menampilkan opsi
-  void showOption(complaint) async {
+  Future<String?> showOption(complaint) async {
     var result = await Get.dialog(
       SimpleDialog(
         children: [
@@ -83,17 +86,34 @@ class KomplainController extends GetxController {
       barrierDismissible: false,
     );
 
-    // Tindakan berdasarkan hasil dari dialog
     switch (result) {
       case 'update':
         Get.to(() => const UpdateKomplainView(), arguments: complaint)
-            ?.then((value) => refreshComplaints());
+            ?.then((value) {
+          fetchComplaints();
+        });
         break;
       case 'delete':
         if (complaint is Complaints) {
-          // Pastikan `complaint` adalah instance dari `Complaints`
-          deleteComplaint(
-              complaint.idComplaint); // Gunakan `idComplaint` sebagai argumen
+          bool? confirmDelete = await Get.defaultDialog<bool>(
+              title: "Are you sure?",
+              content: Text("You won't be able to revert this!"),
+              textConfirm: "Yes, delete it!",
+              textCancel: "Cancel",
+              confirmTextColor: Colors.white,
+              onConfirm: () {
+                Get.back(result: true); // Pastikan untuk mengembalikan true
+              },
+              onCancel: () {
+                Get.back(result: false); // Pastikan untuk mengembalikan false
+              });
+          print("Confirm Delete: $confirmDelete"); // Debug log
+          if (confirmDelete == true) {
+            print(
+                "Deleting complaint with ID: ${complaint.idComplaint}"); // Debug log
+            deleteComplaint(complaint.idComplaint);
+            fetchComplaints(); // Panggil fetchComplaints setelah penghapusan
+          }
         }
         break;
     }
@@ -101,10 +121,12 @@ class KomplainController extends GetxController {
 
   void deleteComplaint(String complaintId) async {
     String? token = await SharedPrefsHelper.getToken();
-    print("Token: $token"); // Debug token
+    print("Token: $token");
+
     var url =
         Uri.parse('${AppRoutes.deleteComplaints}?id_complaint=$complaintId');
-    print("URL: $url"); // Debug URL
+    print("URL: $url");
+
     var response = await http.delete(
       url,
       headers: {
@@ -113,31 +135,31 @@ class KomplainController extends GetxController {
       },
     );
 
-    print("Status Code: ${response.statusCode}"); // Debug status code
-    print("Response Body: ${response.body}"); // Debug response body
+    print("Status Code: ${response.statusCode}");
+    print("Response Body: ${response.body}");
 
     if (response.statusCode == 200) {
       var data = json.decode(response.body);
       if (data['success']) {
         print('Complaint deleted successfully');
         Get.snackbar(
-          'Success', // Title
-          'Complaint deleted successfully', // Message
+          'Success',
+          'Complaint deleted successfully',
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.blue,
           colorText: Colors.white,
-          duration: const Duration(seconds: 5), // Durasi tampilan Snackbar
+          duration: const Duration(seconds: 5),
         );
-        fetchComplaints(); // Refresh the complaints list after deletion
+        fetchComplaints();
       } else {
         print('Failed to delete complaint');
         Get.snackbar(
-          'Error', // Title
-          'Failed to delete complaint', // Message
+          'Error',
+          'Failed to delete complaint',
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.blue,
           colorText: Colors.white,
-          duration: const Duration(seconds: 5), // Durasi tampilan Snackbar
+          duration: const Duration(seconds: 5),
         );
       }
     } else {
@@ -145,12 +167,12 @@ class KomplainController extends GetxController {
       print(
           'Failed to delete complaint with status code: ${response.statusCode}');
       Get.snackbar(
-        'Error', // Title
-        'Failed to delete complaint. Status code: ${response.statusCode}', // Message
+        'Error',
+        'Failed to delete complaint. Status code: ${response.statusCode}',
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Colors.blue,
         colorText: Colors.white,
-        duration: const Duration(seconds: 5), // Durasi tampilan Snackbar
+        duration: const Duration(seconds: 5),
       );
     }
   }

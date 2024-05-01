@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sipevo/module/operator/home/widget/menus.dart';
+import 'package:sipevo/module/operator/home/widget/scrap_vokasi.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../controller/home_controller.dart';
@@ -11,7 +12,7 @@ import 'package:get/get.dart';
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
 
-  // URL tujuan
+  // URL
   final String _url = 'https://vokasi.unesa.ac.id/';
 
   @override
@@ -28,7 +29,7 @@ class HomeView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.4,
+                    height: MediaQuery.of(context).size.height * 0.3,
                     width: MediaQuery.of(context).size.width,
                     child: Stack(
                       children: [
@@ -38,7 +39,7 @@ class HomeView extends StatelessWidget {
                               child: Container(
                                 width: MediaQuery.of(context).size.width,
                                 decoration: const BoxDecoration(
-                                  color: Color(0xff0f9565),
+                                  color: AppColors.primarySwatch,
                                 ),
                               ),
                             ),
@@ -61,13 +62,12 @@ class HomeView extends StatelessWidget {
                             ),
                           ),
                         ),
-                        // Tambahkan widget Positioned baru di sini
+
                         Positioned(
                           right: 20,
                           top: 20,
                           child: Text(
-                            DateFormat('dd MMMM yyyy')
-                                .format(DateTime.now()), // Format tanggal
+                            DateFormat('dd MMMM yyyy').format(DateTime.now()),
                             style: const TextStyle(
                               fontSize: 16.0,
                               color: Colors.white,
@@ -76,10 +76,9 @@ class HomeView extends StatelessWidget {
                         ),
                         Positioned(
                           right: 20,
-                          top: 40, // Posisi di sudut kanan bawah
+                          top: 40,
                           child: Text(
-                            DateFormat('HH:mm')
-                                .format(DateTime.now()), // Format jam
+                            DateFormat('HH:mm').format(DateTime.now()),
                             style: const TextStyle(
                               fontSize: 16.0,
                               color: Colors.white,
@@ -89,8 +88,7 @@ class HomeView extends StatelessWidget {
 
                         // menu
                         const Positioned(
-                          bottom:
-                              20, // Atau nilai lain untuk menyesuaikan posisi lebih ke atas
+                          bottom: 20,
                           left: 0,
                           right: 0,
                           child: Menus(),
@@ -98,7 +96,6 @@ class HomeView extends StatelessWidget {
                       ],
                     ),
                   ),
-                  // JARAK ANTARA ATASNYA TERLALU JAUH GIMANA NGATASINNYA BINGUNG SAYA BRO
                   Padding(
                     padding: const EdgeInsets.all(24.0),
                     child: Row(
@@ -118,7 +115,6 @@ class HomeView extends StatelessWidget {
                             if (await canLaunchUrl(url)) {
                               await launchUrl(url);
                             } else {
-                              // Handle the error or show a message if the URL can't be opened
                               print('Could not launch $url');
                             }
                           },
@@ -126,7 +122,7 @@ class HomeView extends StatelessWidget {
                             "See all",
                             style: TextStyle(
                               fontSize: 14.0,
-                              color: Color(0xff0f9565),
+                              color: AppColors.primarySwatch,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -200,8 +196,8 @@ class HomeView extends StatelessWidget {
                                     shape: BoxShape.circle,
                                     color: (Theme.of(context).brightness ==
                                                 Brightness.dark
-                                            ? const Color(0xff0f9565)
-                                            : const Color(0xff0f9565)
+                                            ? AppColors.primarySwatch
+                                            : AppColors.primarySwatch
                                                 .withOpacity(
                                                 0.6,
                                               ))
@@ -216,66 +212,63 @@ class HomeView extends StatelessWidget {
                       ],
                     );
                   }),
-                  Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Theme.of(context)
-                            .cardColor, // Ensure this matches your existing color
-                        borderRadius:
-                            BorderRadius.circular(20), // Added border radius
-                      ),
-                      child: Builder(
-                        builder: (context) {
-                          final List<Map> chartData = [
-                            {
-                              "year": "Pending",
-                              "sales": 40,
-                            },
-                            {
-                              "year": "Open",
-                              "sales": 90,
-                            },
-                            {
-                              "year": "Closed",
-                              "sales": 30,
-                            },
-                          ];
+                  // ScrapVokasi(),
+                  // Padding(
+                  //   padding: const EdgeInsets.all(20.0),
+                  //   child: Container(
+                  //     decoration: BoxDecoration(
+                  //       color: Theme.of(context).cardColor,
+                  //       borderRadius: BorderRadius.circular(20),
+                  //     ),
+                  //     child: Builder(
+                  //       builder: (context) {
+                  //         final List<Map> chartData = [
+                  //           {
+                  //             "year": "Pending",
+                  //             "sales": 40,
+                  //           },
+                  //           {
+                  //             "year": "Open",
+                  //             "sales": 90,
+                  //           },
+                  //           {
+                  //             "year": "Closed",
+                  //             "sales": 30,
+                  //           },
+                  //         ];
 
-                          return Padding(
-                            padding: const EdgeInsets.all(20.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Total Pengaduan", // Title text
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleLarge, // Adjust the style as needed
-                                ),
-                                SfCircularChart(
-                                  legend: const Legend(isVisible: true),
-                                  series: <CircularSeries>[
-                                    PieSeries<Map, String>(
-                                      dataSource: chartData,
-                                      dataLabelSettings:
-                                          const DataLabelSettings(
-                                        isVisible: true,
-                                      ),
-                                      xValueMapper: (Map data, _) =>
-                                          data["year"],
-                                      yValueMapper: (Map data, _) =>
-                                          data["sales"],
-                                    )
-                                  ],
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  ),
+                  //         return Padding(
+                  //           padding: const EdgeInsets.all(20.0),
+                  //           child: Column(
+                  //             crossAxisAlignment: CrossAxisAlignment.start,
+                  //             children: [
+                  //               Text(
+                  //                 "Total Pengaduan",
+                  //                 style: Theme.of(context).textTheme.titleLarge,
+                  //               ),
+                  //               SfCircularChart(
+                  //                 legend: const Legend(isVisible: true),
+                  //                 series: <CircularSeries>[
+                  //                   PieSeries<Map, String>(
+                  //                     dataSource: chartData,
+                  //                     dataLabelSettings:
+                  //                         const DataLabelSettings(
+                  //                       isVisible: true,
+                  //                     ),
+                  //                     xValueMapper: (Map data, _) =>
+                  //                         data["year"],
+                  //                     yValueMapper: (Map data, _) =>
+                  //                         data["sales"],
+                  //                   )
+                  //                 ],
+                  //               ),
+                  //             ],
+                  //           ),
+                  //         );
+                  //       },
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ),

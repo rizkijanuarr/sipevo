@@ -11,55 +11,76 @@ import 'package:http/http.dart' as http;
 class UpdateKomplainController extends GetxController {
   UpdateKomplainView? view;
 
-  Rx<Complaints>? complaints; // Tambahkan variabel untuk menyimpan data keluhan
-
   @override
   void onInit() {
-    complaints = Rx<Complaints>(
-        Get.arguments as Complaints); // Inisialisasi data keluhan dari argumen
+    if (Get.arguments is Complaints) {
+      complaints = Rx<Complaints>(Get.arguments as Complaints);
+    }
     super.onInit();
   }
 
-  void updateComplaintStatus(String newStatus) async {
-    String? token = await SharedPrefsHelper.getToken();
-    var response = await http.post(
-      Uri.parse(AppRoutes.updateComplaints),
-      headers: {
-        'Authorization': 'Bearer $token',
-        'Content-Type': 'application/json',
-      },
-      body: jsonEncode({
-        'id_complaint': complaints?.value.idComplaint,
-        'status': newStatus,
-      }),
-    );
-    print('Updating status to: $newStatus');
+  // KEBUTUHAN DROPDOWN status
+  String? selectedStatus;
 
-    if (response.statusCode == 200) {
-      // Handle success
-      var responseData = jsonDecode(response.body);
-      print(responseData['message']); // Print message to console
-      Get.back(); // Kembali ke halaman sebelumnya
-      Get.snackbar(
-        "Success",
-        responseData['message'], // Tampilkan snackbar dengan pesan sukses
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.blue, // Warna latar belakang Snackbar
-        colorText: Colors.white, // Warna teks Snackbar
-        duration: const Duration(seconds: 5), // Durasi tampilan Snackbar
+  final List<String> statusItems = [
+    'Tunggu sebentar',
+    'Sedang diproses',
+    'Telah diselesaikan',
+  ];
+
+  void updateSelectedStatus(String? newStatus) {
+    selectedStatus = newStatus;
+    update();
+  }
+  // KEBUTUHAN DROPDOWN status
+
+  Rx<Complaints>? complaints;
+
+  Future<void> updateStatus() async {
+    if (selectedStatus != null &&
+        complaints != null &&
+        complaints?.value != null) {
+      String? token = await SharedPrefsHelper.getToken();
+      var url = Uri.parse(AppRoutes.updateComplaints);
+
+      var response = await http.post(
+        url,
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode({
+          'id_complaint': complaints?.value.idComplaint,
+          'status': selectedStatus,
+        }),
       );
-    } else {
-      // Handle error
-      var responseData = jsonDecode(response.body);
-      print('Failed to update complaint status: ${responseData['message']}');
-      Get.snackbar(
-        "Error",
-        "Failed to update complaint status: ${responseData['message']}", // Tampilkan snackbar dengan pesan error
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.blue, // Warna latar belakang Snackbar
-        colorText: Colors.white, // Warna teks Snackbar
-        duration: const Duration(seconds: 5), // Durasi tampilan Snackbar
-      );
+
+      print("STATUS COMPLAINTS : $url");
+
+      if (response.statusCode == 200) {
+        var data = jsonDecode(response.body);
+        print("STATUS COMPLAINTS: ${response.body}");
+
+        Get.snackbar(
+          "Success",
+          data['message'],
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.blue,
+          colorText: Colors.white,
+          duration: const Duration(seconds: 5),
+        );
+      } else {
+        var data = jsonDecode(response.body);
+        print('STATUS COMPLAINTS: ${data['message']}');
+        Get.snackbar(
+          "Error",
+          "STATUS COMPLAINTS: ${data['message']}",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.blue,
+          colorText: Colors.white,
+          duration: const Duration(seconds: 5),
+        );
+      }
     }
   }
 }

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 class BorderDotted extends StatelessWidget {
   final Widget child;
-  final Color color; // Warna garis putus-putus
-  final double strokeWidth; // Lebar garis putus-putus
-  final List<double> dashPattern; // Pola garis putus-putus
-  final double gap; // Jarak antara titik-titik
+  final Color color;
+  final double strokeWidth;
+  final List<double> dashPattern;
+  final double gap;
 
   const BorderDotted({
     super.key,
@@ -35,10 +35,10 @@ class BorderDotted extends StatelessWidget {
 }
 
 class BorderDottedPainter extends CustomPainter {
-  final Color color; // Properti warna
-  final double strokeWidth; // Properti lebar garis
-  final List<double> dashPattern; // Properti pola garis putus-putus
-  final double gap; // Properti jarak antara titik-titik
+  final Color color;
+  final double strokeWidth;
+  final List<double> dashPattern;
+  final double gap;
 
   BorderDottedPainter({
     required this.color,
@@ -61,7 +61,7 @@ class BorderDottedPainter extends CustomPainter {
         if (endX < size.width) {
           canvas.drawLine(Offset(startX, 0), Offset(endX, 0), paint);
         }
-        startX = endX + dashPattern[i + 1] + gap; // Menambahkan gap
+        startX = endX + dashPattern[i + 1] + gap;
       }
     }
   }

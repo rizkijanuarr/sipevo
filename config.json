@@ -15,6 +15,7 @@
         "operator/home",
         "operator/komplain",
         "operator/komplain/update_komplain",
+        "operator/logs_system",
         "operator/akun",
         "mahasiswa/navbarmhs",
         "mahasiswa/dashboard",

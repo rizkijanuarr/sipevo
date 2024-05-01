@@ -25,6 +25,10 @@ class NavbaropView extends StatelessWidget {
             "label": "List Complaints",
           },
           {
+            "icon": Icons.history,
+            "label": "List Logs",
+          },
+          {
             "icon": Icons.person,
             "label": "Profile",
           }
@@ -39,6 +43,7 @@ class NavbaropView extends StatelessWidget {
               children: const [
                 HomeView(),
                 KomplainView(),
+                LogsSystemView(),
                 AkunView(),
               ],
             ),
@@ -53,15 +58,13 @@ class NavbaropView extends StatelessWidget {
                       color: Colors.black.withOpacity(0.5),
                       blurRadius: 5.0,
                       spreadRadius: 2.0,
-                      offset: const Offset(0, -3), // Menggeser shadow ke atas
+                      offset: const Offset(0, -3),
                     ),
                   ],
                 ),
                 child: BottomAppBar(
-                  elevation:
-                      0, // Tetapkan elevation menjadi 0 untuk menghindari shadow bawaan
-                  color: Colors
-                      .transparent, // Setel warna menjadi transparan untuk menghindari double shadow
+                  elevation: 0,
+                  color: Colors.transparent,
                   child: SizedBox(
                     height: 60,
                     child: Row(
@@ -76,15 +79,14 @@ class NavbaropView extends StatelessWidget {
                               Icon(
                                 menu["icon"] as IconData,
                                 color: index == controller.selectedIndex
-                                    ? const Color(0xff0f9565)
+                                    ? AppColors.primarySwatch
                                     : Colors.grey,
                               ),
                               if (index == controller.selectedIndex)
                                 Text(
                                   menu["label"] as String,
                                   style: const TextStyle(
-                                    color: Color(0xff0f9565),
-                                  ),
+                                      color: AppColors.primarySwatch),
                                 ),
                             ],
                           ),

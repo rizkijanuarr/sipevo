@@ -10,6 +10,8 @@ class Complaints {
   final String? updatedByRole;
   final String? photoComplaints; // New field for photo URL
   final String? location;
+  final String? name; // New field for user name
+  final String? prodi; // New field for user program
 
   Complaints({
     required this.idComplaint,
@@ -23,6 +25,8 @@ class Complaints {
     this.updatedBy,
     this.updatedByRole,
     this.photoComplaints, // Initialize in constructor
+    this.name, // Initialize in constructor
+    this.prodi, // Initialize in constructor
   });
 
   factory Complaints.fromJson(Map<String, dynamic> json) {
@@ -38,6 +42,8 @@ class Complaints {
       updatedByRole: json['updated_by_role'],
       photoComplaints: json['photo_complaints'],
       location: json['location'],
+      name: json['name'], // Get user name from JSON
+      prodi: json['prodi'], // Get user program from JSON
     );
   }
 }

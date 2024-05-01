@@ -6,7 +6,7 @@ import '../view/home_view.dart';
 class HomeController extends GetxController {
   HomeView? view;
 
-  var userRole = ''.obs; // Membuat userRole sebagai observable
+  var userRole = ''.obs;
 
   @override
   void onInit() {
@@ -16,11 +16,10 @@ class HomeController extends GetxController {
 
   void fetchUserRoleFromPrefs() async {
     final prefs = await SharedPreferences.getInstance();
-    final String? role = prefs.getString(
-        'userRole'); // Pastikan kunci ini sesuai dengan yang Anda gunakan saat menyimpan
+    final String? role = prefs.getString('userRole');
 
     if (role != null) {
-      userRole.value = role; // Memperbarui nilai userRole
+      userRole.value = role;
     }
   }
 

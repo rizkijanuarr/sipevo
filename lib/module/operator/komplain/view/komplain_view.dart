@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import '../controller/komplain_controller.dart';
 import 'package:sipevo/core.dart';
 import 'package:get/get.dart';
@@ -11,12 +12,10 @@ class KomplainView extends StatelessWidget {
     return GetBuilder<KomplainController>(
       init: KomplainController(),
       builder: (controller) {
-        // Removed the duplicate builder property and combined the logic here
-        controller.view =
-            this; // Assuming this line is necessary for your logic
+        controller.view = this;
         return Scaffold(
           appBar: AppBar(
-            title: const Text("List Complaints"),
+            title: Text("List Complaints (${controller.total_complaints})"),
             actions: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -38,49 +37,159 @@ class KomplainView extends StatelessWidget {
                         var complaint = controller.complaints[index];
                         return Stack(
                           children: [
-                            Card(
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  children: [
-                                    Expanded(
-                                      child: Column(
+                            InkWell(
+                              onTap: () async {
+                                // Aksi yang akan diambil saat card ditekan
+                                String? result =
+                                    await controller.showOption(complaint);
+                                if (result == 'update') {
+                                  // update
+                                } else if (result == 'delete') {
+                                  // del
+                                } else {
+                                  // close
+                                }
+                                return;
+                              },
+                              child: Card(
+                                child: Padding(
+                                  padding: EdgeInsets.all(10.0),
+                                  child: Row(
+                                    children: [
+                                      Stack(
+                                        alignment: Alignment.center,
+                                        children: [
+                                          ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(12),
+                                            child: Image.network(
+                                              controller.basePhotoComplaints +
+                                                  complaint.photoComplaints!,
+                                              width: 100,
+                                              height: 100,
+                                              fit: BoxFit.cover,
+                                              loadingBuilder:
+                                                  (BuildContext context,
+                                                      Widget child,
+                                                      ImageChunkEvent?
+                                                          loadingProgress) {
+                                                if (loadingProgress == null)
+                                                  return child;
+                                                return Container(
+                                                  width: 200,
+                                                  height: 200,
+                                                  child: Center(
+                                                    child:
+                                                        CircularProgressIndicator(
+                                                      value: loadingProgress
+                                                                  .expectedTotalBytes !=
+                                                              null
+                                                          ? loadingProgress
+                                                                  .cumulativeBytesLoaded /
+                                                              loadingProgress
+                                                                  .expectedTotalBytes!
+                                                          : null,
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                              errorBuilder: (context, error,
+                                                      stackTrace) =>
+                                                  const Icon(
+                                                      Icons.broken_image),
+                                            ),
+                                          ),
+                                          Positioned(
+                                            top: 0,
+                                            left: 0,
+                                            child: Container(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 6, vertical: 2),
+                                              decoration: BoxDecoration(
+                                                color: _getStatusColor(complaint
+                                                    .status), // Mengambil warna berdasarkan status
+                                                borderRadius: BorderRadius.only(
+                                                  topLeft: Radius.circular(12),
+                                                ),
+                                              ),
+                                              child: Text(
+                                                complaint.status,
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: const TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 8.0,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        width: 10.0,
+                                      ),
+                                      Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                              "Subject: ${complaint.subject ?? ''}"),
-                                          const SizedBox(height: 4),
-                                          Text(
-                                              "Deskripsi: ${complaint.description ?? ''}"),
-                                          const SizedBox(height: 8),
-                                          Text(
-                                              "Di proses oleh: ${complaint.updatedByRole ?? ''}"),
-                                          const SizedBox(
-                                            height: 5.0,
-                                          ),
-                                          Chip(
-                                            label: Text(
-                                              complaint.status,
-                                              style: const TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 12.0),
+                                            _truncateStringIfNeeded(
+                                                complaint.subject, 30),
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                              fontSize: 14.0,
+                                              fontWeight: FontWeight.bold,
                                             ),
-                                            backgroundColor: complaint.status
-                                                        .toLowerCase() ==
-                                                    'open'
-                                                ? Colors.orange[500]
-                                                : Colors.red[500],
+                                          ),
+                                          Text(
+                                            _truncateStringIfNeeded(
+                                                complaint.description, 30),
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                              fontSize: 12.0,
+                                            ),
+                                          ),
+                                          Text(
+                                            _truncateStringIfNeeded(
+                                                "Lokasi : ${complaint.location!}",
+                                                30),
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                              fontSize: 12.0,
+                                            ),
+                                          ),
+                                          Row(
+                                            children: [
+                                              Text(
+                                                "${complaint.name!} |",
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: TextStyle(
+                                                  fontSize: 12.0,
+                                                ),
+                                              ),
+                                              const SizedBox(
+                                                width: 5.0,
+                                              ),
+                                              Text(
+                                                _truncateStringIfNeeded(
+                                                    complaint.prodi!, 12),
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: TextStyle(
+                                                  fontSize: 12.0,
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ],
                                       ),
-                                    ),
-                                    IconButton(
-                                      icon: const Icon(Icons.more_vert),
-                                      onPressed: () =>
-                                          controller.showOption(complaint),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -103,5 +212,28 @@ class KomplainView extends StatelessWidget {
         );
       },
     );
+  }
+
+  // Fungsi untuk mendapatkan warna berdasarkan status
+  Color _getStatusColor(String status) {
+    switch (status) {
+      case 'Tunggu sebentar':
+        return Colors.deepOrange[300]!;
+      case 'Sedang diproses':
+        return Colors.red[300]!;
+      case 'Telah diselesaikan':
+        return Colors.green[300]!;
+      default:
+        return Colors.grey[300]!;
+    }
+  }
+
+  // KEBUTUHAN MEMOTONG STRING YANG PANJANGNYA MELEBIHI BATAS
+  String _truncateStringIfNeeded(String input, int maxLength) {
+    if (input.length <= maxLength) {
+      return input;
+    } else {
+      return input.substring(0, maxLength) + '...';
+    }
   }
 }

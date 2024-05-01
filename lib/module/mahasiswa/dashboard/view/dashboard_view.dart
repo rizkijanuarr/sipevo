@@ -65,8 +65,7 @@ class DashboardView extends StatelessWidget {
                           right: 20,
                           top: 20,
                           child: Text(
-                            DateFormat('dd MMMM yyyy')
-                                .format(DateTime.now()),
+                            DateFormat('dd MMMM yyyy').format(DateTime.now()),
                             style: const TextStyle(
                               fontSize: 16.0,
                               color: Colors.white,
@@ -77,8 +76,7 @@ class DashboardView extends StatelessWidget {
                           right: 20,
                           top: 40,
                           child: Text(
-                            DateFormat('HH:mm')
-                                .format(DateTime.now()),
+                            DateFormat('HH:mm').format(DateTime.now()),
                             style: const TextStyle(
                               fontSize: 16.0,
                               color: Colors.white,
@@ -88,8 +86,7 @@ class DashboardView extends StatelessWidget {
 
                         // menu
                         const Positioned(
-                          bottom:
-                              20,
+                          bottom: 20,
                           left: 0,
                           right: 0,
                           child: Meynu(),
@@ -117,7 +114,6 @@ class DashboardView extends StatelessWidget {
                             if (await canLaunchUrl(url)) {
                               await launchUrl(url);
                             } else {
-
                               print('Could not launch $url');
                             }
                           },

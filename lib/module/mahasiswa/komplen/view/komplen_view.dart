@@ -16,7 +16,7 @@ class KomplenView extends StatelessWidget {
         controller.view = this;
         return Scaffold(
           appBar: AppBar(
-            title: const Text("List Complaints"),
+            title: Text("List Complaints (${controller.total_complaints})"),
             actions: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -99,7 +99,7 @@ class KomplenView extends StatelessWidget {
                                                 color: _getStatusColor(complaint
                                                     .status), // Mengambil warna berdasarkan status
                                                 borderRadius: BorderRadius.only(
-                                                  topLeft: Radius.circular(50),
+                                                  topLeft: Radius.circular(12),
                                                 ),
                                               ),
                                               child: Text(
@@ -109,6 +109,7 @@ class KomplenView extends StatelessWidget {
                                                 style: const TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 8.0,
+                                                  fontWeight: FontWeight.bold,
                                                 ),
                                               ),
                                             ),
@@ -121,7 +122,8 @@ class KomplenView extends StatelessWidget {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          complaint.subject,
+                                          _truncateStringIfNeeded(
+                                              complaint.subject, 30),
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
                                           style: TextStyle(
@@ -130,7 +132,8 @@ class KomplenView extends StatelessWidget {
                                           ),
                                         ),
                                         Text(
-                                          complaint.description,
+                                          _truncateStringIfNeeded(
+                                              complaint.description, 30),
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
                                           style: TextStyle(
@@ -138,7 +141,9 @@ class KomplenView extends StatelessWidget {
                                           ),
                                         ),
                                         Text(
-                                          complaint.location!,
+                                          _truncateStringIfNeeded(
+                                              "Lokasi : ${complaint.location!}",
+                                              30),
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
                                           style: TextStyle(
@@ -146,7 +151,8 @@ class KomplenView extends StatelessWidget {
                                           ),
                                         ),
                                         Text(
-                                          complaint.createdAt,
+                                          _truncateStringIfNeeded(
+                                              complaint.createdAt, 30),
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
                                           style: TextStyle(
@@ -198,6 +204,15 @@ class KomplenView extends StatelessWidget {
         return Colors.green[300]!;
       default:
         return Colors.grey[300]!;
+    }
+  }
+
+  // KEBUTUHAN MEMOTONG STRING YANG PANJANGNYA MELEBIHI BATAS
+  String _truncateStringIfNeeded(String input, int maxLength) {
+    if (input.length <= maxLength) {
+      return input;
+    } else {
+      return input.substring(0, maxLength) + '...';
     }
   }
 }

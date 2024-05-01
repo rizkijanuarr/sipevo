@@ -1,5 +1,5 @@
 /*
-We believe, the class name must be unique.
+We believe, the class name must be unique. 
 If there is a conflicting class name in this file,
 it means you have to rename it to something more unique.
 */
@@ -28,13 +28,19 @@ export 'package:sipevo/module/admin/user/view/user_view.dart';
 export 'package:sipevo/module/login/controller/login_controller.dart';
 export 'package:sipevo/module/login/view/login_view.dart';
 export 'package:sipevo/module/mahasiswa/account/controller/account_controller.dart';
+export 'package:sipevo/module/mahasiswa/account/update_account/controller/update_account_controller.dart';
+export 'package:sipevo/module/mahasiswa/account/update_account/view/update_account_view.dart';
 export 'package:sipevo/module/mahasiswa/account/view/account_view.dart';
+export 'package:sipevo/module/mahasiswa/account/view/update_account.dart';
 export 'package:sipevo/module/mahasiswa/dashboard/controller/dashboard_controller.dart';
 export 'package:sipevo/module/mahasiswa/dashboard/view/dashboard_view.dart';
 export 'package:sipevo/module/mahasiswa/dashboard/widget/dot.dart';
 export 'package:sipevo/module/mahasiswa/dashboard/widget/meynu.dart';
 export 'package:sipevo/module/mahasiswa/komplen/controller/komplen_controller.dart';
+export 'package:sipevo/module/mahasiswa/komplen/tambah_komplen/controller/tambah_komplen_controller.dart';
+export 'package:sipevo/module/mahasiswa/komplen/tambah_komplen/view/tambah_komplen_view.dart';
 export 'package:sipevo/module/mahasiswa/komplen/view/komplen_view.dart';
+export 'package:sipevo/module/mahasiswa/komplen/view/tambah_komplen.dart';
 export 'package:sipevo/module/mahasiswa/navbarmhs/controller/navbarmhs_controller.dart';
 export 'package:sipevo/module/mahasiswa/navbarmhs/view/navbarmhs_view.dart';
 export 'package:sipevo/module/models/complaints.dart';
@@ -42,14 +48,18 @@ export 'package:sipevo/module/models/logs.dart';
 export 'package:sipevo/module/models/user.dart';
 export 'package:sipevo/module/operator/akun/controller/akun_controller.dart';
 export 'package:sipevo/module/operator/akun/view/akun_view.dart';
+export 'package:sipevo/module/operator/akun/view/update_akun.dart';
 export 'package:sipevo/module/operator/home/controller/home_controller.dart';
 export 'package:sipevo/module/operator/home/view/home_view.dart';
 export 'package:sipevo/module/operator/home/widget/border_dotted.dart';
 export 'package:sipevo/module/operator/home/widget/menus.dart';
+export 'package:sipevo/module/operator/home/widget/scrap_vokasi.dart';
 export 'package:sipevo/module/operator/komplain/controller/komplain_controller.dart';
 export 'package:sipevo/module/operator/komplain/update_komplain/controller/update_komplain_controller.dart';
 export 'package:sipevo/module/operator/komplain/update_komplain/view/update_komplain_view.dart';
 export 'package:sipevo/module/operator/komplain/view/komplain_view.dart';
+export 'package:sipevo/module/operator/logs_system/controller/logs_system_controller.dart';
+export 'package:sipevo/module/operator/logs_system/view/logs_system_view.dart';
 export 'package:sipevo/module/operator/navbarop/controller/navbarop_controller.dart';
 export 'package:sipevo/module/operator/navbarop/view/navbarop_view.dart';
 export 'package:sipevo/module/register/controller/register_controller.dart';
