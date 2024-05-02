@@ -158,27 +158,7 @@ class KomplenController extends GetxController {
           colorText: Colors.white,
           duration: const Duration(seconds: 5),
         );
-      } else {
-        final responseData = json.decode(await response.stream.bytesToString());
-        Get.snackbar(
-          'Error',
-          responseData['message'],
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.blue,
-          colorText: Colors.white,
-          duration: const Duration(seconds: 5),
-        );
       }
-    } catch (e) {
-      print('An error occurred: $e');
-      Get.snackbar(
-        'Error',
-        'An unexpected error occurred',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-        duration: const Duration(seconds: 5),
-      );
     } finally {
       subjectController.clear();
       descriptionController.clear();

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sipevo/app_routes.dart';
+import 'package:sipevo/core.dart';
 import 'package:sipevo/module/models/complaints.dart';
 import 'package:sipevo/shared_prefs_helper.dart';
 import '../view/update_complaints_view.dart';
@@ -55,11 +56,11 @@ class UpdateComplaintsController extends GetxController {
         }),
       );
 
-      print("STATUS COMPLAINTS : $url");
+      print("STATUS COMPLAINTS ADMIN : $url");
+      print("RESPONSE COMPLAINTS ADMIN : ${response.body}");
 
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
-        print("STATUS COMPLAINTS: ${response.body}");
 
         Get.snackbar(
           "Success",
@@ -69,18 +70,9 @@ class UpdateComplaintsController extends GetxController {
           colorText: Colors.white,
           duration: const Duration(seconds: 5),
         );
-      } else {
-        var data = jsonDecode(response.body);
-        print('STATUS COMPLAINTS: ${data['message']}');
-        Get.snackbar(
-          "Error",
-          "STATUS COMPLAINTS: ${data['message']}",
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.blue,
-          colorText: Colors.white,
-          duration: const Duration(seconds: 5),
-        );
       }
     }
   }
+
+  // LAST
 }

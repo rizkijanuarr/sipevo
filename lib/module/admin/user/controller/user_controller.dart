@@ -42,6 +42,7 @@ class UserController extends GetxController {
 
     if (response.statusCode == 200) {
       var data = json.decode(response.body);
+
       if (data['success']) {
         users.value = (data['users'] as List)
             .map((userJson) => User.fromJson(userJson))
@@ -76,8 +77,7 @@ class UserController extends GetxController {
 
     switch (result) {
       case 'update':
-        Get.to(() => const UpdateUserView(), arguments: user)
-            ?.then((value) => refreshUsers());
+        Get.to(() => const UpdateUserView(), arguments: user);
         break;
       case 'delete':
         if (user != null) {
@@ -132,15 +132,6 @@ class UserController extends GetxController {
           duration: const Duration(seconds: 5),
         );
       }
-    } else {
-      Get.snackbar(
-        'Error',
-        'Failed to delete user',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-        duration: const Duration(seconds: 5),
-      );
     }
   }
 

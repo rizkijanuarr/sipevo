@@ -1,6 +1,8 @@
 import "dart:async";
 
+import 'package:sipevo/core.dart';
 import "package:flutter/material.dart";
+import "package:get/get.dart";
 import "package:sipevo/module/onboard.dart";
 import "package:sipevo/util/theme.dart";
 
@@ -26,7 +28,40 @@ class _SplashPageState extends State<SplashPage> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => OnboardPage(),
+          builder: (context) => FutureBuilder(
+            future: Future.wait([
+              SharedPrefsHelper.getToken(),
+              SharedPrefsHelper.getUserRole()
+            ]),
+            builder: (context, AsyncSnapshot<List<String?>> snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                // Menampilkan widget loading jika masih menunggu hasil Future
+                return CircularProgressIndicator();
+              } else {
+                if (snapshot.hasError) {
+                  // Menampilkan pesan error jika terjadi kesalahan
+                  return Text('Error: ${snapshot.error}');
+                } else {
+                  final List<String?> data = snapshot.data!;
+                  final String? token = data[0];
+                  final String? userRole = data[1];
+
+                  if (token != null && userRole != null) {
+                    switch (userRole) {
+                      case 'admin':
+                        return const NavAdmin();
+                      case 'operator':
+                        return const NavbaropView();
+                      case 'mahasiswa':
+                        return const NavbarmhsView();
+                    }
+                  }
+                  // Jika token atau userRole null, atau userRole tidak cocok, navigasi ke OnboardPage
+                  return OnboardPage();
+                }
+              }
+            },
+          ),
         ),
       );
     });

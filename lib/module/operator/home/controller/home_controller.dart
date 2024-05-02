@@ -23,7 +23,7 @@ class HomeController extends GetxController {
     }
   }
 
-  // carousel
+  // KEBUTUHAN CAROUSEL
   int currentIndex = 0;
   final CarouselController carouselController = CarouselController();
 }

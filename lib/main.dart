@@ -10,7 +10,7 @@ void main() async {
   final String? userRole = await SharedPrefsHelper.getUserRole();
 
   Get.put(LoginController());
-  Widget startingWidget = const LoginView();
+  Widget startingWidget = SplashPage();
 
   if (token != null && userRole != null) {
     switch (userRole) {
@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
           elevation: 0,
         ),
       ),
-      home: SplashPage(),
+      home: startingWidget,
     );
   }
 }

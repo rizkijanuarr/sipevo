@@ -6,7 +6,7 @@ import '../view/dashboard_view.dart';
 class DashboardController extends GetxController {
   DashboardView? view;
 
-  var userRole = ''.obs; // Membuat userRole sebagai observable
+  var userRole = ''.obs;
 
   @override
   void onInit() {
@@ -17,14 +17,14 @@ class DashboardController extends GetxController {
   void fetchUserRoleFromPrefs() async {
     final prefs = await SharedPreferences.getInstance();
     final String? role = prefs.getString(
-        'userRole'); // Pastikan kunci ini sesuai dengan yang Anda gunakan saat menyimpan
+        'userRole');
 
     if (role != null) {
-      userRole.value = role; // Memperbarui nilai userRole
+      userRole.value = role;
     }
   }
 
-  // carousel
+  // KEBUTUHAN CAROUSEL
   int currentIndex = 0;
   final CarouselController carouselController = CarouselController();
 }

@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "package:get/get.dart";
 import "package:sipevo/core.dart";
 import "package:sipevo/util/theme.dart";
 
@@ -61,14 +62,7 @@ class OnboardPage extends StatelessWidget {
                               color: AppColors.baseColor), // Warna border
                         ),
                       ),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => LoginView(),
-                          ),
-                        );
-                      },
+                      onPressed: () => Get.to(() => LoginView()),
                       child: Text(
                         "CIVITAS AKEDEMIK",
                         style: buttonOnboard,
@@ -86,14 +80,7 @@ class OnboardPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => RegisterView(),
-                          ),
-                        );
-                      },
+                      onPressed: () => Get.to(() => RegisterView()),
                       child: Text(
                         "MAHASISWA",
                         style: buttonOnboard,
@@ -105,7 +92,7 @@ class OnboardPage extends StatelessWidget {
                   ),
                   Text(
                     "Dengan memilih salah satu, Anda menyetujuinya Ketentuan Layanan & Kebijakan Privasi",
-                    style: subtitleonboard,
+                    style: textOnboard,
                     textAlign: TextAlign.center,
                   ),
                 ],

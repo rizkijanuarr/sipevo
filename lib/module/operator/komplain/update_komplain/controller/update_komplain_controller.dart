@@ -69,17 +69,6 @@ class UpdateKomplainController extends GetxController {
           colorText: Colors.white,
           duration: const Duration(seconds: 5),
         );
-      } else {
-        var data = jsonDecode(response.body);
-        print('STATUS COMPLAINTS: ${data['message']}');
-        Get.snackbar(
-          "Error",
-          "STATUS COMPLAINTS: ${data['message']}",
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.blue,
-          colorText: Colors.white,
-          duration: const Duration(seconds: 5),
-        );
       }
     }
   }

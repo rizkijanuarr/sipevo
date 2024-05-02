@@ -22,14 +22,12 @@ class UpdateUserView extends StatelessWidget {
             child: ListView(
               padding: const EdgeInsets.all(16),
               children: [
-                TextFormField(
-                  controller: controller.controllerId,
-                  decoration: const InputDecoration(labelText: 'ID'),
-                  enabled: false, // ID tidak perlu diubah
-                ),
-                const SizedBox(
-                  height: 20.0,
-                ),
+                // TextFormField(
+                //   controller: controller.controllerId,
+                //   decoration: const InputDecoration(labelText: 'ID'),
+                //   enabled: false, // ID tidak perlu diubah
+
+                // ),
                 TextFormField(
                   controller: controller.controllerName,
                   decoration: const InputDecoration(labelText: 'Name'),

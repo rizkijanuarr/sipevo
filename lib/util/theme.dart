@@ -14,9 +14,9 @@ TextStyle subtitleSplash = GoogleFonts.poppins(
   fontWeight: FontWeight.w300,
 );
 
-TextStyle subtitleonboard = GoogleFonts.poppins(
+TextStyle textOnboard = GoogleFonts.poppins(
   color: Color(0xffFFFFFF),
-  fontSize: 12,
+  fontSize: 10,
   fontWeight: FontWeight.w300,
 );
 

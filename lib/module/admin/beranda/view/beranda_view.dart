@@ -2,7 +2,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:sipevo/core.dart';
 import 'package:get/get.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -103,7 +102,7 @@ class BerandaView extends StatelessWidget {
                             ),
                           ),
                         ),
-                        GestureDetector(
+                        InkWell(
                           onTap: () async {
                             final url = Uri.parse(_url);
                             if (await canLaunchUrl(url)) {

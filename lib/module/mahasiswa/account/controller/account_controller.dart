@@ -92,10 +92,12 @@ class AccountController extends GetxController {
     print("Updating user profile at URL: $url");
 
     try {
-      if (nameController.text.isEmpty || nohpController.text.isEmpty) {
+      if (nameController.text.isEmpty ||
+          nohpController.text.isEmpty ||
+          photoController.text.isEmpty) {
         Get.snackbar(
           'Error',
-          'Subject and description cannot be empty',
+          'Name, No HP, Photo cannot be empty',
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.blue,
           colorText: Colors.white,
@@ -129,33 +131,13 @@ class AccountController extends GetxController {
 
         Get.snackbar(
           'Success',
-          'Complaint added successfully. Photo URL: $photoUrl',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.blue,
-          colorText: Colors.white,
-          duration: const Duration(seconds: 5),
-        );
-      } else {
-        final responseData = json.decode(await response.stream.bytesToString());
-        Get.snackbar(
-          'Error',
-          responseData['message'],
+          'Profile updated!',
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.blue,
           colorText: Colors.white,
           duration: const Duration(seconds: 5),
         );
       }
-    } catch (e) {
-      print('An error occurred: $e');
-      Get.snackbar(
-        'Error',
-        'An unexpected error occurred',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-        duration: const Duration(seconds: 5),
-      );
     } finally {
       nameController.clear();
       nohpController.clear();

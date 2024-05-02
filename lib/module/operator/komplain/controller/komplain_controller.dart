@@ -111,7 +111,6 @@ class KomplainController extends GetxController {
           if (confirmDelete == true) {
             print("Deleting complaint with ID: ${complaint.idComplaint}");
             deleteComplaint(complaint.idComplaint);
-            fetchComplaints();
           }
         }
         break;

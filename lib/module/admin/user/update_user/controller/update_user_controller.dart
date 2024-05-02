@@ -120,31 +120,7 @@ class UpdateUserController extends GetxController {
           colorText: Colors.white,
           duration: const Duration(seconds: 5),
         );
-
-        print('Success: ${data['message']}');
-        // Optionally, navigate back or refresh the user list
-      } else {
-        Get.snackbar(
-          'Error',
-          data['message'],
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.blue,
-          colorText: Colors.white,
-          duration: const Duration(seconds: 5),
-        );
-        print('Error: ${data['message']}');
       }
-    } else {
-      Get.snackbar(
-        'Error',
-        'Failed to update user. Status code: ${response.statusCode}',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.blue,
-        colorText: Colors.white,
-        duration: const Duration(seconds: 5),
-      );
-      print(
-          'Error: Failed to update user. Status code: ${response.statusCode}');
     }
   }
 

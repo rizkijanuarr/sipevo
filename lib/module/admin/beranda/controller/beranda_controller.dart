@@ -6,7 +6,7 @@ import '../view/beranda_view.dart';
 class BerandaController extends GetxController {
   BerandaView? view;
 
-  var userRole = ''.obs; // Membuat userRole sebagai observable
+  var userRole = ''.obs;
 
   @override
   void onInit() {
@@ -16,15 +16,14 @@ class BerandaController extends GetxController {
 
   void fetchUserRoleFromPrefs() async {
     final prefs = await SharedPreferences.getInstance();
-    final String? role = prefs.getString(
-        'userRole'); // Pastikan kunci ini sesuai dengan yang Anda gunakan saat menyimpan
+    final String? role = prefs.getString('userRole');
 
     if (role != null) {
-      userRole.value = role; // Memperbarui nilai userRole
+      userRole.value = role;
     }
   }
 
-  // carousel
+  // KEBUTUHAN CAROUSEL
   int currentIndex = 0;
   final CarouselController carouselController = CarouselController();
 }

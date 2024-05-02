@@ -229,17 +229,9 @@ class RegisterView extends StatelessWidget {
                                             "Have an Account ? ",
                                             style: TextStyle(),
                                           ),
-                                          GestureDetector(
-                                            onTap: () {
-                                              try {
-                                                print(
-                                                    "Navigating to LoginView");
-                                                Get.back(canPop: true);
-                                              } catch (e) {
-                                                print(
-                                                    "Error navigating to LoginView: $e");
-                                              }
-                                            },
+                                          InkWell(
+                                            onTap: () =>
+                                                Get.offAll(() => LoginView()),
                                             child: const Text(
                                               "Login",
                                               style: TextStyle(
