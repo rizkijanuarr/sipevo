@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sipevo/core.dart';
 import 'package:get/get.dart';
+import 'package:sipevo/module/mahasiswa/komplen/view/success_add_komplen.dart';
 
 class TambahKomplen extends StatelessWidget {
   const TambahKomplen({super.key});
@@ -157,6 +158,13 @@ class TambahKomplen extends StatelessWidget {
                         ),
                         onPressed: () async {
                           controller.addComplaint();
+
+                          // Navigasi ke halaman SuccessAddKomplen setelah berhasil menambahkan keluhan
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SuccessAddKomplen()),
+                          );
                         },
                         child: Text(
                           "Tambahkan".toUpperCase(),

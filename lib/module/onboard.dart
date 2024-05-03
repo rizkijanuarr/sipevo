@@ -37,18 +37,9 @@ class OnboardPage extends StatelessWidget {
                     style: subtitleSplash,
                     textAlign: TextAlign.center,
                   ),
-                ],
-              ),
-            ),
-          ),
-          Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 30.0, vertical: 30.0),
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
+                  const SizedBox(
+                    height: 20.0,
+                  ),
                   Container(
                     width: double.infinity,
                     height: 66,
@@ -64,7 +55,7 @@ class OnboardPage extends StatelessWidget {
                       ),
                       onPressed: () => Get.to(() => LoginView()),
                       child: Text(
-                        "CIVITAS AKEDEMIK",
+                        "Login",
                         style: buttonOnboard,
                       ),
                     ),
@@ -82,13 +73,13 @@ class OnboardPage extends StatelessWidget {
                       ),
                       onPressed: () => Get.to(() => RegisterView()),
                       child: Text(
-                        "MAHASISWA",
+                        "Register",
                         style: buttonOnboard,
                       ),
                     ),
                   ),
                   const SizedBox(
-                    height: 10.0,
+                    height: 20.0,
                   ),
                   Text(
                     "Dengan memilih salah satu, Anda menyetujuinya Ketentuan Layanan & Kebijakan Privasi",
@@ -98,6 +89,53 @@ class OnboardPage extends StatelessWidget {
                 ],
               ),
             ),
+          ),
+          Column(
+            children: [
+              Expanded(
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Container(
+                    width: double.infinity,
+                    height: 100,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              "assets/logo-unesa.png",
+                              width: 60,
+                              height: 60,
+                            ),
+                            const SizedBox(
+                              width: 5.0,
+                            ),
+                            Image.asset(
+                              "assets/logo-vokasi.png",
+                              width: 100,
+                              height: 100,
+                            ),
+                            const SizedBox(
+                              width: 5.0,
+                            ),
+                            Image.asset(
+                              "assets/zee.png",
+                              width: 70,
+                              height: 70,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
       ),

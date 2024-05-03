@@ -84,7 +84,7 @@ class ComplaintsController extends GetxController {
 
     switch (result) {
       case 'update':
-        Get.to(() => const UpdateKomplainView(), arguments: complaint)
+        Get.to(() => const UpdateComplaintsView(), arguments: complaint)
             ?.then((value) {
           fetchComplaints();
         });

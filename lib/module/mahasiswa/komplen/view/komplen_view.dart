@@ -89,31 +89,6 @@ class KomplenView extends StatelessWidget {
                                                       Icons.broken_image),
                                             ),
                                           ),
-                                          Positioned(
-                                            top: 0,
-                                            left: 0,
-                                            child: Container(
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: 6, vertical: 2),
-                                              decoration: BoxDecoration(
-                                                color: _getStatusColor(complaint
-                                                    .status), // Mengambil warna berdasarkan status
-                                                borderRadius: BorderRadius.only(
-                                                  topLeft: Radius.circular(12),
-                                                ),
-                                              ),
-                                              child: Text(
-                                                complaint.status,
-                                                maxLines: 1,
-                                                overflow: TextOverflow.ellipsis,
-                                                style: const TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 8.0,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
                                         ],
                                       ),
                                     ),
@@ -162,6 +137,30 @@ class KomplenView extends StatelessWidget {
                                       ],
                                     ),
                                   ],
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                              top: 0,
+                              right: 0,
+                              child: Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 6, vertical: 2),
+                                decoration: BoxDecoration(
+                                  color: _getStatusColor(complaint.status),
+                                  borderRadius: BorderRadius.only(
+                                    topRight: Radius.circular(12),
+                                  ),
+                                ),
+                                child: Text(
+                                  complaint.status,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 10.0,
+                                  ),
                                 ),
                               ),
                             ),

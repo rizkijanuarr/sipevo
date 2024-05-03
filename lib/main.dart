@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:sipevo/core.dart';
 import 'package:sipevo/module/splash.dart';
@@ -26,6 +27,11 @@ void main() async {
     }
   }
 
+  // Change status bar color
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    statusBarColor: AppColors.baseColor, // Sesuaikan dengan AppColors.baseColor
+  ));
+
   runApp(MyApp(startingWidget: startingWidget));
 }
 
@@ -50,7 +56,13 @@ class MyApp extends StatelessWidget {
           elevation: 0,
         ),
       ),
-      home: startingWidget,
+      home: AnnotatedRegion<SystemUiOverlayStyle>(
+        value: SystemUiOverlayStyle(
+          statusBarColor:
+              AppColors.baseColor, // Sesuaikan dengan AppColors.baseColor
+        ),
+        child: startingWidget,
+      ),
     );
   }
 }

@@ -1,11 +1,11 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sipevo/app_routes.dart';
+import 'package:sipevo/core.dart';
 import 'package:sipevo/module/models/complaints.dart';
+import 'package:sipevo/module/operator/komplain/update_komplain/view/update_komplain_view.dart';
 import 'package:sipevo/shared_prefs_helper.dart';
-import '../view/update_komplain_view.dart';
 import 'package:http/http.dart' as http;
 
 class UpdateKomplainController extends GetxController {
@@ -19,29 +19,43 @@ class UpdateKomplainController extends GetxController {
     super.onInit();
   }
 
-  // KEBUTUHAN DROPDOWN status
-  String? selectedStatus;
-
-  final List<String> statusItems = [
-    'Tunggu sebentar',
-    'Sedang diproses',
-    'Telah diselesaikan',
-  ];
-
-  void updateSelectedStatus(String? newStatus) {
-    selectedStatus = newStatus;
-    update();
-  }
-  // KEBUTUHAN DROPDOWN status
-
   Rx<Complaints>? complaints;
 
-  Future<void> updateStatus() async {
-    if (selectedStatus != null &&
-        complaints != null &&
-        complaints?.value != null) {
+  Future<void> readComplaint() async {
+    if (complaints != null && complaints?.value != null) {
       String? token = await SharedPrefsHelper.getToken();
-      var url = Uri.parse(AppRoutes.updateComplaints);
+      var url = Uri.parse('${AppRoutes.updateComplaints}?action=read');
+
+      var response = await http.post(
+        url,
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode({'complaint_id': complaints?.value.idComplaint}),
+      );
+
+      print("URL READ COMPLAINTS : $url");
+
+      if (response.statusCode == 200) {
+        var data = jsonDecode(response.body);
+
+        Get.snackbar(
+          "Success",
+          data['message'],
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.blue,
+          colorText: Colors.white,
+          duration: const Duration(seconds: 5),
+        );
+      }
+    }
+  }
+
+  Future<void> resolveComplaint() async {
+    if (complaints != null && complaints?.value != null) {
+      String? token = await SharedPrefsHelper.getToken();
+      var url = Uri.parse('${AppRoutes.updateComplaints}?action=resolve');
 
       var response = await http.post(
         url,
@@ -50,16 +64,13 @@ class UpdateKomplainController extends GetxController {
           'Content-Type': 'application/json',
         },
         body: jsonEncode({
-          'id_complaint': complaints?.value.idComplaint,
-          'status': selectedStatus,
+          'complaint_id': complaints?.value.idComplaint,
         }),
       );
-
-      print("STATUS COMPLAINTS : $url");
+      print("URL RESOLVE COMPLAINTS : $url");
 
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
-        print("STATUS COMPLAINTS: ${response.body}");
 
         Get.snackbar(
           "Success",

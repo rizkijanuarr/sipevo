@@ -141,6 +141,7 @@ TextStyle h1Detail = GoogleFonts.poppins(
   fontSize: 14,
   fontWeight: FontWeight.w400,
 );
+
 TextStyle h2Detail = GoogleFonts.poppins(
   color: Color(0xff272C2F),
   fontSize: 14,

@@ -52,8 +52,34 @@ class RegisterView extends StatelessWidget {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          const Column(
+                          Column(
                             children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Image.asset(
+                                    "assets/logo-unesa.png",
+                                    width: 60,
+                                    height: 60,
+                                  ),
+                                  SizedBox(
+                                    width: 5.0,
+                                  ),
+                                  Image.asset(
+                                    "assets/logo-vokasi.png",
+                                    width: 100,
+                                    height: 100,
+                                  ),
+                                  const SizedBox(
+                                    width: 5.0,
+                                  ),
+                                  Image.asset(
+                                    "assets/zee.png",
+                                    width: 70,
+                                    height: 70,
+                                  ),
+                                ],
+                              ),
                               Text(
                                 "SISTEM PENGADUAN VOKASI",
                                 style: TextStyle(

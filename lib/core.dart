@@ -1,5 +1,5 @@
 /*
-We believe, the class name must be unique. 
+We believe, the class name must be unique.
 If there is a conflicting class name in this file,
 it means you have to rename it to something more unique.
 */
@@ -28,8 +28,6 @@ export 'package:sipevo/module/admin/user/view/user_view.dart';
 export 'package:sipevo/module/login/controller/login_controller.dart';
 export 'package:sipevo/module/login/view/login_view.dart';
 export 'package:sipevo/module/mahasiswa/account/controller/account_controller.dart';
-export 'package:sipevo/module/mahasiswa/account/update_account/controller/update_account_controller.dart';
-export 'package:sipevo/module/mahasiswa/account/update_account/view/update_account_view.dart';
 export 'package:sipevo/module/mahasiswa/account/view/account_view.dart';
 export 'package:sipevo/module/mahasiswa/account/view/update_account.dart';
 export 'package:sipevo/module/mahasiswa/dashboard/controller/dashboard_controller.dart';
@@ -37,8 +35,6 @@ export 'package:sipevo/module/mahasiswa/dashboard/view/dashboard_view.dart';
 export 'package:sipevo/module/mahasiswa/dashboard/widget/dot.dart';
 export 'package:sipevo/module/mahasiswa/dashboard/widget/meynu.dart';
 export 'package:sipevo/module/mahasiswa/komplen/controller/komplen_controller.dart';
-export 'package:sipevo/module/mahasiswa/komplen/tambah_komplen/controller/tambah_komplen_controller.dart';
-export 'package:sipevo/module/mahasiswa/komplen/tambah_komplen/view/tambah_komplen_view.dart';
 export 'package:sipevo/module/mahasiswa/komplen/view/komplen_view.dart';
 export 'package:sipevo/module/mahasiswa/komplen/view/tambah_komplen.dart';
 export 'package:sipevo/module/mahasiswa/navbarmhs/controller/navbarmhs_controller.dart';
