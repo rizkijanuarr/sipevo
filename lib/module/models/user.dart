@@ -1,44 +1,51 @@
 class User {
-  final int? id;
-  final String name;
-  final String nohp;
-  final String pass;
-  final String role;
-  final String photo;
-  final String mahasiswa_angkatan;
-  final String prodi;
+  int id;
+  dynamic usersIdentifiesId;
+  String name;
+  String noInduk;
+  String noHp;
+  String email;
+  dynamic emailVerifiedAt;
+  DateTime createdAt;
+  DateTime updatedAt;
 
   User({
-    this.id,
+    required this.id,
+    this.usersIdentifiesId,
     required this.name,
-    required this.nohp,
-    required this.pass,
-    required this.role,
-    required this.photo,
-    required this.mahasiswa_angkatan,
-    required this.prodi,
+    required this.noInduk,
+    required this.noHp,
+    required this.email,
+    this.emailVerifiedAt,
+    required this.createdAt,
+    required this.updatedAt,
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
-    print('Parsing user: ${json['name']}');
     return User(
-      id: json['id_user'] != null
-          ? (json['id_user'] is String
-              ? int.tryParse(json['id_user'])
-              : json['id_user'])
-          : null,
-      name: json['name'] ?? '',
-      nohp: json['nohp'] ?? '',
-      pass: json['pass'] ?? '',
-      role: json['role'] ?? '',
-      photo: json['photo'] ?? '',
-      mahasiswa_angkatan: json['mahasiswa_angkatan'] ?? '',
-      prodi: json['prodi'] ?? '',
+      id: json['id'],
+      usersIdentifiesId: json['users_identifies_id'],
+      name: json['name'],
+      noInduk: json['no_induk'],
+      noHp: json['no_hp'],
+      email: json['email'],
+      emailVerifiedAt: json['email_verified_at'],
+      createdAt: DateTime.parse(json['created_at']),
+      updatedAt: DateTime.parse(json['updated_at']),
     );
   }
 
-  @override
-  String toString() {
-    return 'User{id: $id, name: $name, nohp: $nohp, pass: $pass,  role: $role, photo: $photo, mahasiswa_angkatan: $mahasiswa_angkatan, prodi: $prodi}';
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'users_identifies_id': usersIdentifiesId,
+      'name': name,
+      'no_induk': noInduk,
+      'no_hp': noHp,
+      'email': email,
+      'email_verified_at': emailVerifiedAt,
+      'created_at': createdAt.toIso8601String(),
+      'updated_at': updatedAt.toIso8601String(),
+    };
   }
 }

@@ -2,34 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:sipevo/core.dart';
-import 'package:sipevo/module/splash.dart';
+import 'package:sipevo/module/menus/view/menus_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   final String? token = await SharedPrefsHelper.getToken();
-  final String? userRole = await SharedPrefsHelper.getUserRole();
 
   Get.put(LoginController());
-  Widget startingWidget = SplashPage();
 
-  if (token != null && userRole != null) {
-    switch (userRole) {
-      case 'admin':
-        startingWidget = const NavAdmin();
-        break;
-      case 'operator':
-        startingWidget = const NavbaropView();
-        break;
-      case 'mahasiswa':
-        startingWidget = const NavbarmhsView();
-        break;
-    }
-  }
+  // Tentukan halaman awal berdasarkan status token
+  Widget startingWidget = token != null ? MenusView() : SplashView();
 
   // Change status bar color
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-    statusBarColor: AppColors.baseColor, // Sesuaikan dengan AppColors.baseColor
+    statusBarColor: AppColors.baseColor,
   ));
 
   runApp(MyApp(startingWidget: startingWidget));
