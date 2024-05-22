@@ -29,70 +29,75 @@ class StatusView extends StatelessWidget {
               ? Center(
                   child: CircularProgressIndicator(),
                 )
-              : ListView.builder(
-                  itemCount: controller.statuses.length,
-                  itemBuilder: (context, index) {
-                    PengaduanStatus status = controller.statuses[index];
-                    Color backgroundColor;
+              : controller.statuses.isEmpty
+                  ? Center(
+                      child: Text('Data tidak tersedia!'),
+                    )
+                  : ListView.builder(
+                      itemCount: controller.statuses.length,
+                      itemBuilder: (context, index) {
+                        PengaduanStatus status = controller.statuses[index];
+                        Color backgroundColor;
 
-                    switch (status.name) {
-                      case 'Pending':
-                        backgroundColor = Colors.red;
-                        break;
-                      case 'Sedang diproses':
-                        backgroundColor = Colors.yellow;
-                        break;
-                      case 'Terselesaikan':
-                        backgroundColor = Colors.green;
-                        break;
-                      default:
-                        backgroundColor = Colors.grey;
-                    }
+                        switch (status.name) {
+                          case 'Pending':
+                            backgroundColor = Colors.red;
+                            break;
+                          case 'Sedang diproses':
+                            backgroundColor = Colors.yellow;
+                            break;
+                          case 'Terselesaikan':
+                            backgroundColor = Colors.green;
+                            break;
+                          default:
+                            backgroundColor = Colors.grey;
+                        }
 
-                    return Card(
-                      elevation: 1,
-                      margin: const EdgeInsets.all(8),
-                      child: ListTile(
-                        title: RichText(
-                          text: TextSpan(
-                            text: status.name,
-                            style: TextStyle(
-                              color: Colors.black,
-                              backgroundColor: backgroundColor,
-                            ),
-                          ),
-                        ),
-                        subtitle: Text(status.slug),
-                        onTap: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) {
-                              return AlertDialog(
-                                title: Text(status.name),
-                                content: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Text('Name: ${status.name}'),
-                                    Text('Slug: ${status.slug}'),
-                                  ],
+                        return Card(
+                          elevation: 1,
+                          margin: const EdgeInsets.all(8),
+                          child: ListTile(
+                            title: RichText(
+                              text: TextSpan(
+                                text: status.name,
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  backgroundColor: backgroundColor,
                                 ),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                    child: Text('Close'),
-                                  ),
-                                ],
+                              ),
+                            ),
+                            subtitle: Text(status.slug),
+                            onTap: () {
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    title: Text(status.name),
+                                    content: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text('Name: ${status.name}'),
+                                        Text('Slug: ${status.slug}'),
+                                      ],
+                                    ),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text('Close'),
+                                      ),
+                                    ],
+                                  );
+                                },
                               );
                             },
-                          );
-                        },
-                      ),
-                    );
-                  },
-                ),
+                          ),
+                        );
+                      },
+                    ),
         );
       },
     );

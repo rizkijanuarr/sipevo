@@ -29,26 +29,32 @@ class CategoriesView extends StatelessWidget {
               ? Center(
                   child: CircularProgressIndicator(),
                 )
-              : ListView.builder(
-                  itemCount: controller.categories.length,
-                  itemBuilder: (context, index) {
-                    PengaduanCategory category = controller.categories[index];
-                    return Card(
-                      margin: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                      elevation: 1,
-                      child: ListTile(
-                        leading: CircleAvatar(
-                          backgroundImage: NetworkImage(category.image),
-                        ),
-                        title: Text(category.name),
-                        subtitle: Text(category.slug),
-                        onTap: () {
-                          _showCategoryDialog(context, category);
-                        },
-                      ),
-                    );
-                  },
-                ),
+              : controller.categories.isEmpty
+                  ? Center(
+                      child: Text('Data tidak tersedia!'),
+                    )
+                  : ListView.builder(
+                      itemCount: controller.categories.length,
+                      itemBuilder: (context, index) {
+                        PengaduanCategory category =
+                            controller.categories[index];
+                        return Card(
+                          margin:
+                              EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                          elevation: 1,
+                          child: ListTile(
+                            leading: CircleAvatar(
+                              backgroundImage: NetworkImage(category.image),
+                            ),
+                            title: Text(category.name),
+                            subtitle: Text(category.slug),
+                            onTap: () {
+                              _showCategoryDialog(context, category);
+                            },
+                          ),
+                        );
+                      },
+                    ),
         );
       },
     );

@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import '../../../../app_routes.dart';
+import '../../../../core.dart';
 
 class RegisterController extends GetxController {
   late TextEditingController noIndukController;
@@ -63,7 +63,11 @@ class RegisterController extends GetxController {
         );
 
         final responseData = jsonDecode(response.body);
-        if (response.statusCode == 200 || response.statusCode == 201) {
+        if (response.statusCode == 201) {
+          String token = responseData['token'];
+
+          await SharedPrefsHelper.saveToken(token);
+
           if (responseData['success']) {
             Get.snackbar(
               'Success',
@@ -74,6 +78,7 @@ class RegisterController extends GetxController {
               duration: const Duration(seconds: 3),
             );
             clearFields();
+            Get.off(() => MenusView());
           } else {
             Get.snackbar(
               'Error',

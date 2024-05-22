@@ -1,10 +1,9 @@
 class AppRoutes {
-  static const baseURL =
-      'https://e07f-2001-448a-5021-2ff3-f56e-4232-9450-3bcc.ngrok-free.app/api';
+  static const baseURL = 'https://5b7c-180-241-4-166.ngrok-free.app/api';
 
   // AUTH
   static String login = '$baseURL/login';
-  static String register = '$baseURL/register'; // FOKUS DISINI YA CATAT!
+  static String register = '$baseURL/register';
   static String logout = '$baseURL/logout';
 
   // PENGADUAN
