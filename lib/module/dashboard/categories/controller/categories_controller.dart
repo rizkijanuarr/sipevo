@@ -2,8 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../models/PengaduanCategory.dart';
-import '../view/categories_view.dart';
 import 'package:sipevo/core.dart';
 import 'package:http/http.dart' as http;
 
@@ -24,10 +22,10 @@ class CategoriesController extends GetxController {
     Get.snackbar(
       'Refreshed',
       'Data telah diperbarui🚀',
-      snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: Colors.blue,
+      snackPosition: SnackPosition.TOP,
+      backgroundColor: Colors.green,
       colorText: Colors.white,
-      duration: const Duration(seconds: 2),
+      duration: const Duration(seconds: 3),
     );
   }
 

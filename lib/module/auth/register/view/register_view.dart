@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../core.dart';
-import '../../../../util/color.dart';
-import '../controller/register_controller.dart';
 
 class RegisterView extends StatelessWidget {
   const RegisterView({Key? key}) : super(key: key);

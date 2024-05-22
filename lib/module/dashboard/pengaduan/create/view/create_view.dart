@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import '../controller/create_controller.dart';
 import 'package:sipevo/core.dart';
 
 class CreateView extends StatelessWidget {

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:jwt_decode/jwt_decode.dart';
 import 'package:sipevo/core.dart';
-import 'package:sipevo/module/menus/view/menus_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -11,13 +10,15 @@ void main() async {
 
   Get.put(LoginController());
 
-  // Tentukan halaman awal berdasarkan status token
-  Widget startingWidget = token != null ? MenusView() : SplashView();
+  bool isTokenValid = false;
+  if (token != null) {
+    isTokenValid = !Jwt.isExpired(token);
+    if (!isTokenValid) {
+      await SharedPrefsHelper.removeToken();
+    }
+  }
 
-  // Change status bar color
-  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-    statusBarColor: AppColors.baseColor,
-  ));
+  Widget startingWidget = isTokenValid ? MenusView() : SplashView();
 
   runApp(MyApp(startingWidget: startingWidget));
 }
@@ -28,27 +29,23 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      theme: ThemeData(
-        useMaterial3: true,
-        scaffoldBackgroundColor: Colors.grey[300],
-        appBarTheme: const AppBarTheme(
-          backgroundColor: AppColors.baseColor,
-          titleTextStyle: TextStyle(
-            color: Colors.white,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
+    return SafeArea(
+      child: GetMaterialApp(
+        theme: ThemeData(
+          useMaterial3: true,
+          scaffoldBackgroundColor: Colors.grey[100],
+          appBarTheme: const AppBarTheme(
+            backgroundColor: AppColors.baseColor,
+            titleTextStyle: TextStyle(
+              color: Colors.white,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+            iconTheme: IconThemeData(color: Colors.white),
+            elevation: 0,
           ),
-          iconTheme: IconThemeData(color: Colors.white),
-          elevation: 0,
         ),
-      ),
-      home: AnnotatedRegion<SystemUiOverlayStyle>(
-        value: SystemUiOverlayStyle(
-          statusBarColor:
-              AppColors.baseColor, // Sesuaikan dengan AppColors.baseColor
-        ),
-        child: startingWidget,
+        home: startingWidget,
       ),
     );
   }

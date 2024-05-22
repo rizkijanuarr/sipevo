@@ -2,10 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../../app_routes.dart';
-import '../../../../shared_prefs_helper.dart';
-import '../../../models/Pengaduan.dart';
-import '../view/pengaduan_view.dart';
+import '../../../../core.dart';
 
 import 'package:http/http.dart' as http;
 
@@ -21,10 +18,10 @@ class PengaduanController extends GetxController {
     Get.snackbar(
       'Refreshed',
       'Data telah diperbarui🚀',
-      snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: Colors.blue,
+      snackPosition: SnackPosition.TOP,
+      backgroundColor: Colors.green,
       colorText: Colors.white,
-      duration: const Duration(seconds: 2),
+      duration: const Duration(seconds: 3),
     );
   }
 
@@ -54,12 +51,86 @@ class PengaduanController extends GetxController {
           data.map((pengaduan) => Pengaduan.fromJson(pengaduan)),
         );
       } else {
-        Get.snackbar('Error', 'Failed to fetch data: ${response.statusCode}');
+        Get.snackbar(
+          'Error',
+          'Failed to fetch data: ${response.statusCode} 🤯',
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+          duration: const Duration(seconds: 3),
+        );
       }
     } catch (e) {
-      Get.snackbar('Exception', 'An error occurred: $e');
+      Get.snackbar(
+        'Exception',
+        'An error occurred: $e 🤯',
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+        duration: const Duration(seconds: 3),
+      );
     } finally {
       isLoading(false);
+    }
+  }
+
+  Future<void> logout() async {
+    final token = await SharedPrefsHelper.getToken();
+
+    try {
+      final response = await http.post(
+        Uri.parse(AppRoutes.logout),
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final responseData = jsonDecode(response.body);
+
+        if (responseData['success'] == true) {
+          await SharedPrefsHelper.removeToken();
+
+          Get.snackbar(
+            'Logout Successful',
+            'You have been logged out🤩',
+            snackPosition: SnackPosition.TOP,
+            backgroundColor: Colors.green,
+            colorText: Colors.white,
+            duration: const Duration(seconds: 3),
+          );
+
+          Get.offAll(() => LoginView());
+        } else {
+          Get.snackbar(
+            'Logout Failed',
+            'Failed to log out. Please try again. 🤯',
+            snackPosition: SnackPosition.TOP,
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+            duration: const Duration(seconds: 3),
+          );
+        }
+      } else {
+        Get.snackbar(
+          'Logout Failed',
+          'Failed to log out. Please try again. 🤯',
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+          duration: const Duration(seconds: 3),
+        );
+      }
+    } catch (e) {
+      Get.snackbar(
+        'Error',
+        'An error occurred. Please try again. 🤯',
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+        duration: const Duration(seconds: 3),
+      );
     }
   }
 }

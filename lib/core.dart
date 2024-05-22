@@ -24,6 +24,7 @@ export 'package:sipevo/module/menus/controller/menus_controller.dart';
 export 'package:sipevo/module/menus/view/menus_view.dart';
 export 'package:sipevo/module/models/Pengaduan.dart';
 export 'package:sipevo/module/models/PengaduanCategory.dart';
+export 'package:sipevo/module/models/PengaduanCreate.dart';
 export 'package:sipevo/module/models/PengaduanStatus.dart';
 export 'package:sipevo/module/models/complaints.dart';
 export 'package:sipevo/module/models/logs.dart';

@@ -67,40 +67,46 @@ class RegisterController extends GetxController {
           if (responseData['success']) {
             Get.snackbar(
               'Success',
-              'Data User Berhasil Disimpan!',
-              snackPosition: SnackPosition.BOTTOM,
+              'YEAYY, Registration successfuly! 🤩',
+              snackPosition: SnackPosition.TOP,
               backgroundColor: Colors.green,
               colorText: Colors.white,
+              duration: const Duration(seconds: 3),
             );
             clearFields();
           } else {
             Get.snackbar(
               'Error',
-              responseData['message'] ?? 'Unknown error',
-              snackPosition: SnackPosition.BOTTOM,
+              responseData['message 🤯'] ?? 'Unknown error 🤯',
+              snackPosition: SnackPosition.TOP,
               backgroundColor: Colors.red,
               colorText: Colors.white,
+              duration: const Duration(seconds: 3),
             );
           }
         } else {
           print('Error: ${response.statusCode}');
           print('Response Body: ${response.body}');
+
           Get.snackbar(
             'Error',
-            'Failed to register',
-            snackPosition: SnackPosition.BOTTOM,
+            'Failed to register 🤯',
+            snackPosition: SnackPosition.TOP,
             backgroundColor: Colors.red,
             colorText: Colors.white,
+            duration: const Duration(seconds: 3),
           );
         }
       } catch (e) {
         print('Exception: $e');
+
         Get.snackbar(
           'Exception',
-          e.toString(),
-          snackPosition: SnackPosition.BOTTOM,
+          'Exception: $e 🤯',
+          snackPosition: SnackPosition.TOP,
           backgroundColor: Colors.red,
           colorText: Colors.white,
+          duration: const Duration(seconds: 3),
         );
       }
     }

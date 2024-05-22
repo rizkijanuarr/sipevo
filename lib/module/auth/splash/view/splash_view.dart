@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../controller/splash_controller.dart';
 import 'package:sipevo/core.dart';
 import 'package:get/get.dart';
 

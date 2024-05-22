@@ -16,10 +16,7 @@ class PengaduanView extends StatelessWidget {
             title: const Text("Pengaduan"),
             actions: [
               IconButton(
-                onPressed: () async {
-                  await SharedPrefsHelper.removeToken();
-                  Get.offAll(() => LoginView());
-                },
+                onPressed: () => controller.logout(),
                 icon: const Icon(
                   Icons.logout,
                   size: 24.0,
@@ -42,6 +39,22 @@ class PengaduanView extends StatelessWidget {
                   itemCount: controller.pengaduanList.length,
                   itemBuilder: (context, index) {
                     var pengaduan = controller.pengaduanList[index];
+                    Color backgroundColor;
+
+                    switch (pengaduan.pengaduanStatus.name) {
+                      case 'Pending':
+                        backgroundColor = Colors.red;
+                        break;
+                      case 'Sedang diproses':
+                        backgroundColor = Colors.yellow;
+                        break;
+                      case 'Terselesaikan':
+                        backgroundColor = Colors.green;
+                        break;
+                      default:
+                        backgroundColor = Colors.grey;
+                    }
+
                     return Card(
                       margin: EdgeInsets.all(10.0),
                       child: ListTile(
@@ -65,8 +78,15 @@ class PengaduanView extends StatelessWidget {
                                     Text(
                                         'Description: ${pengaduan.description}'),
                                     Text('Location: ${pengaduan.location}'),
-                                    Text(
-                                        'Status: ${pengaduan.pengaduanStatus.name}'),
+                                    RichText(
+                                      text: TextSpan(
+                                        text: pengaduan.pengaduanStatus.name,
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          backgroundColor: backgroundColor,
+                                        ),
+                                      ),
+                                    ),
                                     pengaduan.tanggapanImage != null
                                         ? Image.network(
                                             pengaduan.tanggapanImage!)

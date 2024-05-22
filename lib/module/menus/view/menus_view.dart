@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../controller/menus_controller.dart';
 import 'package:sipevo/core.dart';
 import 'package:get/get.dart';
 
@@ -26,16 +25,16 @@ class MenusView extends StatelessWidget {
             "label": "Home",
           },
           {
+            "icon": Icons.category,
+            "label": "Categories",
+          },
+          {
             "icon": Icons.list,
-            "label": "Order",
+            "label": "Status",
           },
           {
-            "icon": Icons.favorite,
-            "label": "Favorite",
-          },
-          {
-            "icon": Icons.person,
-            "label": "Profile",
+            "icon": Icons.track_changes_sharp,
+            "label": "Pengaduan",
           }
         ];
 
@@ -83,7 +82,7 @@ class MenusView extends StatelessWidget {
                 backgroundColor: AppColors.baseColor,
                 onPressed: () => Get.to(() => CreateView()),
                 child: Icon(
-                  Icons.point_of_sale,
+                  Icons.add,
                   color: Colors.white,
                 ),
               ),

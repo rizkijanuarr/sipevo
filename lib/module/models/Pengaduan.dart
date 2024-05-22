@@ -1,6 +1,3 @@
-import 'package:sipevo/module/models/PengaduanCategory.dart';
-import 'package:sipevo/module/models/PengaduanStatus.dart';
-
 import '../../core.dart';
 
 class Pengaduan {

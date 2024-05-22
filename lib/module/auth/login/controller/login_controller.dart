@@ -1,14 +1,9 @@
 import 'dart:convert';
 
 import 'package:get/get.dart';
-import 'package:sipevo/module/menus/view/menus_view.dart';
-import '../view/login_view.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:sipevo/app_routes.dart';
 import 'package:sipevo/core.dart';
-import 'package:sipevo/shared_prefs_helper.dart';
 
 class LoginController extends GetxController {
   LoginView? view;
@@ -52,7 +47,6 @@ class LoginController extends GetxController {
           },
         );
 
-        // Debug console untuk melihat permintaan dan respons HTTP
         print('Login Request:');
         print('URL: ${AppRoutes.login}');
         print('Body: ${{
@@ -66,25 +60,45 @@ class LoginController extends GetxController {
           final responseData = jsonDecode(response.body);
           String token = responseData['token'];
 
-          await SharedPrefsHelper.setToken(token); // Menyimpan token
+          await SharedPrefsHelper.saveToken(token);
+
+          Get.snackbar(
+            'Success',
+            'YEAYY, Login successfuly! 🤩',
+            snackPosition: SnackPosition.TOP,
+            backgroundColor: Colors.green,
+            colorText: Colors.white,
+            duration: const Duration(seconds: 3),
+          );
 
           Get.off(() => MenusView());
-
-          // Debug console untuk login berhasil
           print('Login Successful');
         } else {
           final responseData = jsonDecode(response.body);
           String errorMessage =
               responseData['message'] ?? 'Login failed, please try again.';
-          Get.snackbar('Error', errorMessage);
 
-          // Debug console untuk login gagal
+          Get.snackbar(
+            'Error',
+            '$errorMessage 🤯',
+            snackPosition: SnackPosition.TOP,
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+            duration: const Duration(seconds: 3),
+          );
+
           print('Login Failed: $errorMessage');
         }
       } catch (e) {
-        Get.snackbar('Error', 'An error occurred: $e');
+        Get.snackbar(
+          'Error',
+          'An error occurred: $e 🤯',
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+          duration: const Duration(seconds: 3),
+        );
 
-        // Debug console untuk kesalahan yang tidak terduga
         print('An unexpected error occurred: $e');
       } finally {
         controllerEmail.clear();

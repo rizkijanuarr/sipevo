@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../models/PengaduanStatus.dart'; // Import model PengaduanStatus
-import '../controller/status_controller.dart';
 import 'package:sipevo/core.dart';
 
 class StatusView extends StatelessWidget {
@@ -35,11 +33,35 @@ class StatusView extends StatelessWidget {
                   itemCount: controller.statuses.length,
                   itemBuilder: (context, index) {
                     PengaduanStatus status = controller.statuses[index];
+                    Color backgroundColor;
+
+                    switch (status.name) {
+                      case 'Pending':
+                        backgroundColor = Colors.red;
+                        break;
+                      case 'Sedang diproses':
+                        backgroundColor = Colors.yellow;
+                        break;
+                      case 'Terselesaikan':
+                        backgroundColor = Colors.green;
+                        break;
+                      default:
+                        backgroundColor = Colors.grey;
+                    }
+
                     return Card(
-                      elevation: 2,
+                      elevation: 1,
                       margin: const EdgeInsets.all(8),
                       child: ListTile(
-                        title: Text(status.name),
+                        title: RichText(
+                          text: TextSpan(
+                            text: status.name,
+                            style: TextStyle(
+                              color: Colors.black,
+                              backgroundColor: backgroundColor,
+                            ),
+                          ),
+                        ),
                         subtitle: Text(status.slug),
                         onTap: () {
                           showDialog(
@@ -75,4 +97,10 @@ class StatusView extends StatelessWidget {
       },
     );
   }
+}
+
+class Status {
+  final String name;
+
+  Status(this.name);
 }

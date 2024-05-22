@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../models/PengaduanCategory.dart';
-import '../controller/categories_controller.dart';
 import 'package:sipevo/core.dart';
 
 class CategoriesView extends StatelessWidget {

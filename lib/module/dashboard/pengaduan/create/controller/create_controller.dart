@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:path/path.dart';
 import '../../../../../app_routes.dart';
 import '../../../../../shared_prefs_helper.dart';
 import '../../../../models/PengaduanCategory.dart';
@@ -102,8 +101,7 @@ class CreateController extends GetxController {
           print('Error: File size exceeds 2MB');
           return;
         }
-        var photo = await http.MultipartFile.fromPath(
-            'image', imageFile.path); // Pastikan nama 'image'
+        var photo = await http.MultipartFile.fromPath('image', imageFile.path);
         request.files.add(photo);
       }
 
@@ -130,13 +128,13 @@ class CreateController extends GetxController {
         selectedImage = null;
         update();
 
-        // Menampilkan Snackbar sukses
         Get.snackbar(
-          'Sukses',
-          'Pengaduan berhasil dibuat!',
-          snackPosition: SnackPosition.BOTTOM,
+          'Success',
+          'YEAY, Pengaduan berhasil dibuat!🤩',
+          snackPosition: SnackPosition.TOP,
           backgroundColor: Colors.green,
           colorText: Colors.white,
+          duration: const Duration(seconds: 3),
         );
       } else {
         print('Error: ${response.statusCode}');
